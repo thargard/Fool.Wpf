@@ -24,5 +24,19 @@ namespace Fool.Wpf
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var but = new Button() { Content = "Дама пик" };
+            but.Click += But_Click;
+            _grid.Children.Add(but);
+        }
+
+        private void But_Click(object sender, RoutedEventArgs e)
+        {
+            var but = new Button() { Content = "Дама треф" };
+            but.Click += But_Click;
+            _grid.Children.Add(but);
+        }
     }
 }
