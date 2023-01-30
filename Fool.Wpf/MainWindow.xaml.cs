@@ -27,16 +27,16 @@ namespace Fool.Wpf
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var but = new Button() { Content = "Дама пик" };
+            /*var but = new Button() { Content = "Дама пик", Height = 20, Width = 80 };
             but.Click += But_Click;
-            _grid.Children.Add(but);
+            _grid.Children.Add(but);*/
         }
 
         private void But_Click(object sender, RoutedEventArgs e)
         {
-            var but = new Button() { Content = "Дама треф" };
+            /*var but = new Button() { Content = "Дама треф", Height = 30, Width = 70 };
             but.Click += But_Click;
-            _grid.Children.Add(but);
+            _grid.Children.Add(but);*/
         }
     }
 }
