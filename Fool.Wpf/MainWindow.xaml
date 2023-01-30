@@ -18,6 +18,6 @@
         </Grid.RowDefinitions>
         <Border Background="#2f5cb6"/>
         <Border Grid.Column ="1" Background="#1f3d7a"/>
-        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#152951"/>
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#151"/>
     </Grid>
 </Window>
