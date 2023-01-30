@@ -18,10 +18,12 @@
         </Grid.RowDefinitions>
         <Border Background="#2f5cb6"/>
         <Border Grid.Column ="1" Background="#1f3d7a"/>
+        <Button Content="Take 1 card" Grid.Column="1" Height="30" Width="70" Margin="65,36,65,223" Click="OneCard"/>
+        <Button Content="Pass turn" Grid.Column="1" Height="30" Width="70" Margin="65,85,65,174" Click="PassTurn"/>
+        <Button Content="Deal 4 cards" Grid.Column="1" Height="30" Width="70" Margin="65,217,65,42" Click="StartGame"/>
         <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#151"/>
-        <ScrollViewer Name="scroll" Grid.Row="1" Grid.ColumnSpan="2" 
+        <ScrollViewer Name="_handArea" Grid.Row="1" Grid.ColumnSpan="2" 
                       HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Disabled">
-            <Button Content="Hand" Height="30" Width="70"/>
         </ScrollViewer>
     </Grid>
 </Window>
