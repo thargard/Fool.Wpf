@@ -79,7 +79,8 @@ namespace Fool.Wpf
         {
             // как делать GET запрос
             var httpClient = new HttpClient();
-            var gs = await httpClient.GetFromJsonAsync<PlayerGameState>("https://localhost:7081/GameState");
+            var gs = await httpClient.GetFromJsonAsync<PlayerGameState>(
+                "https://localhost:7081/GameState");
             Console.WriteLine(gs);
 
             var card = HttpUtility.UrlEncode("дама пик");
