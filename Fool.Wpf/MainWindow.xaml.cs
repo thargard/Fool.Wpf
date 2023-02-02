@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Numerics;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -70,6 +73,21 @@ namespace Fool.Wpf
         {
             for (int i = 0; i < 4; i++)
                 OneCard(sender, e);
+        }
+
+        private async void UpdateGameState_OnClick(object sender, RoutedEventArgs e)
+        {
+            // как делать GET запрос
+            var httpClient = new HttpClient();
+            var gs = await httpClient.GetFromJsonAsync<PlayerGameState>("https://localhost:7081/GameState");
+            Console.WriteLine(gs);
+
+            var card = HttpUtility.UrlEncode("дама пик");
+            var str = $"https://localhost:7081/Move?card={card}";
+            var str1 = await httpClient.PostAsJsonAsync(
+                str, 0);
+            str1.EnsureSuccessStatusCode();
+
         }
     }
 }
