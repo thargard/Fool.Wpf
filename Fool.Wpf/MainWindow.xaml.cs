@@ -84,8 +84,7 @@ namespace Fool.Wpf
 
             var card = HttpUtility.UrlEncode("дама пик");
             var str = $"https://localhost:7081/Move?card={card}";
-            var str1 = await httpClient.PostAsJsonAsync(
-                str, 0);
+            var str1 = await httpClient.PostAsJsonAsync(str, 0);
             str1.EnsureSuccessStatusCode();
 
         }
