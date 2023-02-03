@@ -32,7 +32,7 @@ namespace Fool.Wpf
                 "6 чирв", "7 чирв", "8 чирв", "9 чирв", "10 чирв", "Валет чирв", "Дама чирв", "Король чирв", "Туз чирв"};
 
         List<string> trash = new List<string>() { "7 треф" };
-        
+
         /*string[] trash = { "7 треф" };*/
 
         public MainWindow()
@@ -40,29 +40,17 @@ namespace Fool.Wpf
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            var but = new Button() { Content = "Дама пик", Height = 20, Width = 80 };
-            but.Click += But_Click;
-            _grid.Children.Add(but);
-        }
-
-        private void But_Click(object sender, RoutedEventArgs e)
-        {
-            var but = new Button() { Content = "Дама треф", Height = 30, Width = 70 };
-            but.Click += But_Click;
-            _grid.Children.Add(but);
-        }
-
         private void OneCard(object sender, RoutedEventArgs e)
         {
             if (trash.Count == 36) return;
             Random rnd = new Random();
             int card = rnd.Next(36);
-            if (trash.Contains(deck[card])){
+            if (trash.Contains(deck[card]))
+            {
                 OneCard(sender, e);
             }
-            else {
+            else
+            {
                 var but = new Button() { Content = deck[card], Height = 40, Width = 70 };
                 trash.Add(deck[card]);
                 _handArea.Children.Add(but);
@@ -75,19 +63,24 @@ namespace Fool.Wpf
                 OneCard(sender, e);
         }
 
+        private async void Move(object sender, RoutedEventArgs e)
+        {
+            // Post запрос
+            var httpClient = new HttpClient();
+            var id = 1;
+            var card = HttpUtility.UrlEncode("дама пик");
+            var str = $"https://localhost:7081/Move?playerId={id}&card={card}";
+            var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
+            str1.EnsureSuccessStatusCode();
+        }
+
         private async void UpdateGameState_OnClick(object sender, RoutedEventArgs e)
         {
             // как делать GET запрос
             var httpClient = new HttpClient();
             var gs = await httpClient.GetFromJsonAsync<PlayerGameState>(
-                "https://localhost:7081/GameState");
+                "https://localhost:7081/GameState?playerId=1");
             Console.WriteLine(gs);
-
-            var card = HttpUtility.UrlEncode("дама пик");
-            var str = $"https://localhost:7081/Move?card={card}";
-            var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
-            str1.EnsureSuccessStatusCode();
-
         }
-    }
+    }   
 }

@@ -6,21 +6,18 @@ namespace Fool.Web.Controllers
     [Route("[controller]")]
     public class GameStateController : ControllerBase
     {
-        
+
         [HttpGet]
-        public PlayerGameState Get()
+        public PlayerGameState Get(int playerId)
         {
             // Get from CommonState.SharedState
 
-            var gs =
+            var gs = new PlayerGameState() {
+                CardOnTheTable = CommonState.SharedState.CardOnTheTable,
+                Hand = CommonState.SharedState.Players.Single(p=>p.Id == playerId).Hand,
+                TimeToMove = TimeSpan.FromSeconds(30)
+            };
 
-                new PlayerGameState()
-                {
-                    CardOnTheTable = "дама пик",
-                    Hand = new string[] { "afsd", "asdf" },
-                    TimeToMove = TimeSpan.FromSeconds(30)
-                };
-            
             return gs;
         }
     }

@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 
 namespace Fool.Web.Controllers;
 
@@ -7,9 +9,17 @@ namespace Fool.Web.Controllers;
 public class MoveController : ControllerBase
 {
     [HttpPost]
-    public void Post(string card)
+    public bool Post(int playerId, string card)
     {
-        // Change CommonState.SharedState
+        if (playerId != CommonState.SharedState.CurrentMovePlayerId)
+            return false;
 
+        // Change CommonState.SharedState
+        CommonState.SharedState.CardOnTheTable = card;
+
+        Player player1 = CommonState.SharedState.Players.Single(p => p.Id == playerId);
+        player1.Hand.Remove(card);
+
+        return true;
     }
 }
