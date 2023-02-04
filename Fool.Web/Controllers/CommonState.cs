@@ -3,5 +3,5 @@
 public static class CommonState // "имя"
 {
     // глобальная переменная
-    public static SharedGameState SharedState { get; set; }
+    public static SharedGameState SharedState { get; set; } = new SharedGameState();
 }

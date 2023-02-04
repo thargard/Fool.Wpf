@@ -57,12 +57,6 @@ namespace Fool.Wpf
             }
         }
 
-        private void StartGame(object sender, RoutedEventArgs e)
-        {
-            for (int i = 0; i < 4; i++)
-                OneCard(sender, e);
-        }
-
         private async void Move(object sender, RoutedEventArgs e)
         {
             // Post запрос
@@ -82,5 +76,12 @@ namespace Fool.Wpf
                 "https://localhost:7081/GameState?playerId=1");
             Console.WriteLine(gs);
         }
+
+        private async void StartGame(object sender, RoutedEventArgs e) {
+            var httpClient = new HttpClient();
+            var str ="https://localhost:7081/GameState";
+            var str1 = await httpClient.PostAsJsonAsync(str, 0 );
+        }
+
     }   
 }
