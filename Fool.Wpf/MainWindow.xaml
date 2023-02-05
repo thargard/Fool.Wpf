@@ -17,9 +17,11 @@
         </Grid.RowDefinitions>
         <Border Background="#2f5cb6"/>
         <Border Grid.Column ="1" Background="#1f3d7a"/>
+
         <DockPanel Grid.Column="1">
             <Button Content="Start game" DockPanel.Dock="Top"  Height="40" Width="70" Click="StartGame"/>
             <Button Content="Take 1 card" DockPanel.Dock="Top" Height="40" Margin="5" Width="70" Click="OneCard"/>
+            <Button Content="UpdateUI" DockPanel.Dock="Top" Height="40" Margin="5" Width="70" Click="UpdateUIButton"/>
             <Button Content="Move"  DockPanel.Dock="Top"  Height="40" Margin="5" Width="70" Click="Move"/>
             <Button Content="Get server state"  DockPanel.Dock="Top"  Height="40" Margin="5" Width="70"
                     Click="UpdateGameState_OnClick"/>

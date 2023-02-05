@@ -33,6 +33,8 @@ namespace Fool.Wpf
 
         List<string> trash = new List<string>() { "7 треф" };
 
+        private int port = 5001;
+
         /*string[] trash = { "7 треф" };*/
 
         public MainWindow()
@@ -63,7 +65,7 @@ namespace Fool.Wpf
             var httpClient = new HttpClient();
             var id = 1;
             var card = HttpUtility.UrlEncode("дама пик");
-            var str = $"https://localhost:7081/Move?playerId={id}&card={card}";
+            var str = $"https://localhost:{port}/Move?playerId={id}&card={card}";
             var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
             str1.EnsureSuccessStatusCode();
         }
@@ -73,15 +75,40 @@ namespace Fool.Wpf
             // как делать GET запрос
             var httpClient = new HttpClient();
             var gs = await httpClient.GetFromJsonAsync<PlayerGameState>(
-                "https://localhost:7081/GameState?playerId=1");
+                $"https://localhost:{port}/GameState?playerId=1");
             Console.WriteLine(gs);
         }
 
-        private async void StartGame(object sender, RoutedEventArgs e) {
+        private async void UpdateUIButton(object sender, RoutedEventArgs e)
+        {
             var httpClient = new HttpClient();
-            var str ="https://localhost:7081/GameState";
-            var str1 = await httpClient.PostAsJsonAsync(str, 0 );
+            var gs = await httpClient.GetFromJsonAsync<PlayerGameState>(
+                $"https://localhost:{port}/GameState?playerId=1");
+
+            UpdateUI(gs);
         }
 
-    }   
+        private void UpdateUI(PlayerGameState gs)
+        {
+            var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 50, Background = Brushes.White };
+            _grid.Children.Add(txt);
+
+            foreach (var card in gs.Hand)
+            {
+                var but = new Button() { Content = card, Height = 40, Width = 70 };
+                _handArea.Children.Add(but);
+            }
+        }
+
+
+        private async void StartGame(object sender, RoutedEventArgs e)
+        {
+            var httpClient = new HttpClient();
+            var str = $"https://localhost:{port}/GameState";
+            var str1 = await httpClient.PostAsJsonAsync(str, 0);
+
+
+        }
+
+    }
 }

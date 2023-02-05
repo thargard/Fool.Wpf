@@ -40,9 +40,6 @@ namespace Fool.Web.Controllers
 
             CommonState.SharedState.CurrentMovePlayerId = pl1.Id;
             CommonState.SharedState.CardOnTheTable = CommonState.SharedState.GetOneCard();
-
         }
-
-
     }
 }
