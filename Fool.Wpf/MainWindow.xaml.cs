@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +20,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Fool.Wpf
 {
@@ -35,7 +38,8 @@ namespace Fool.Wpf
 
         private int port = 5001;
 
-        /*string[] trash = { "7 треф" };*/
+        private int decrement;
+
 
         public MainWindow()
         {
@@ -98,8 +102,19 @@ namespace Fool.Wpf
                 var but = new Button() { Content = card, Height = 40, Width = 70 };
                 _handArea.Children.Add(but);
             }
+            
+            decrement = (int)gs.TimeToMove.TotalSeconds;
+            DispatcherTimer dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromSeconds(1);
+            dt.Tick += dtTicker;
+            dt.Start();
         }
 
+        private void dtTicker(object sender, EventArgs e) {
+            decrement--;
+            _timerLable.Content = decrement.ToString();
+            decrement++;
+        }
 
         private async void StartGame(object sender, RoutedEventArgs e)
         {
