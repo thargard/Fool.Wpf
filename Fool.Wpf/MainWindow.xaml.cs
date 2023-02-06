@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -8,6 +9,7 @@ using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
@@ -35,15 +37,26 @@ namespace Fool.Wpf
                 "6 чирв", "7 чирв", "8 чирв", "9 чирв", "10 чирв", "Валет чирв", "Дама чирв", "Король чирв", "Туз чирв"};
 
         List<string> trash = new List<string>() { "7 треф" };
+        private DispatcherTimer dt;
 
         private int port = 5001;
 
         private int decrement;
 
+        private bool _isId1Checked;
+        public bool IsId1Checked { get => _isId1Checked; set => _isId1Checked = value; }
+
+        public string Tttt { get; set; } = "12334567";
 
         public MainWindow()
         {
+            IsId1Checked = true;
             InitializeComponent();
+            Binding binding = new Binding();
+
+            dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromSeconds(1);
+            dt.Tick += Dt_Tick;
         }
 
         private void OneCard(object sender, RoutedEventArgs e)
@@ -67,7 +80,7 @@ namespace Fool.Wpf
         {
             // Post запрос
             var httpClient = new HttpClient();
-            var id = 1;
+            int id = IsId1Checked ? 1 : 2;
             var card = HttpUtility.UrlEncode("дама пик");
             var str = $"https://localhost:{port}/Move?playerId={id}&card={card}";
             var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
@@ -102,22 +115,22 @@ namespace Fool.Wpf
                 var but = new Button() { Content = card, Height = 40, Width = 70 };
                 _handArea.Children.Add(but);
             }
-            
             decrement = (int)gs.TimeToMove.TotalSeconds;
-            DispatcherTimer dt = new DispatcherTimer();
-            dt.Interval = TimeSpan.FromSeconds(1);
-            dt.Tick += dtTicker;
             dt.Start();
+
         }
 
-        private void dtTicker(object sender, EventArgs e) {
+
+
+        private void Dt_Tick(object? sender, EventArgs e)
+        {
             decrement--;
             _timerLable.Content = decrement.ToString();
-            decrement++;
         }
 
         private async void StartGame(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine($"Id1 is {IsId1Checked}");
             var httpClient = new HttpClient();
             var str = $"https://localhost:{port}/GameState";
             var str1 = await httpClient.PostAsJsonAsync(str, 0);

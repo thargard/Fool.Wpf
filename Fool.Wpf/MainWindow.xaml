@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fool.Wpf"
         mc:Ignorable="d"
+        x:Name="Wiii"
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="_grid">
         <Grid.ColumnDefinitions>
@@ -20,10 +21,14 @@
         <Label x:Name="_timerLable" Content="30" Height="40" Width="60" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top">
         </Label>
         <DockPanel Grid.Column="1">
-            <Button Content="Start game" DockPanel.Dock="Top"  Height="40" Width="70" Click="StartGame"/>
-            <Button Content="Take 1 card" DockPanel.Dock="Top" Height="40" Margin="5" Width="70" Click="OneCard"/>
-            <Button Content="UpdateUI" DockPanel.Dock="Top" Height="40" Margin="5" Width="70" Click="UpdateUIButton"/>
-            <Button Content="Move"  DockPanel.Dock="Top"  Height="40" Margin="5" Width="70" Click="Move"/>
+            <RadioButton GroupName="Id" Content="Boris - 1" DockPanel.Dock="Top" 
+                         IsChecked="{Binding Path=IsId1Checked, ElementName=Wiii, Mode=TwoWay}"
+                         Height="20" Width="70"/>
+            <RadioButton GroupName="Id" Content="Gleb - 2" DockPanel.Dock="Top"  Height="20" Width="70" />
+            <Button Content="Start game" DockPanel.Dock="Top"  Height="30" Width="70" Click="StartGame"/>
+            <Button Content="Take 1 card" DockPanel.Dock="Top" Height="30" Margin="5" Width="70" Click="OneCard"/>
+            <Button Content="UpdateUI" DockPanel.Dock="Top" Height="30" Margin="5" Width="70" Click="UpdateUIButton"/>
+            <Button Content="Move"  DockPanel.Dock="Top"  Height="30" Margin="5" Width="70" Click="Move"/>
             <Button Content="Get server state"  DockPanel.Dock="Top"  Height="40" Margin="5" Width="70"
                     Click="UpdateGameState_OnClick"/>
         </DockPanel>
