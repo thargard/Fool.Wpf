@@ -79,16 +79,18 @@ namespace Fool.Wpf
         private async void Move(object sender, RoutedEventArgs e)
         {
             // Post запрос
-            
+
             var httpClient = new HttpClient();
             int id = IsId1Checked ? 1 : 2;
-            
-            var card = HttpUtility.UrlEncode("дама пик");
+
+            var cardd = (Button)sender;
+            var card = HttpUtility.UrlEncode((string)cardd.Content);
+
             var str = $"https://localhost:{port}/Move?playerId={id}&card={card}";
             var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
             // str1.EnsureSuccessStatusCode();
 
-            //UpdateUIButton(sender, e);
+            UpdateUIButton(sender, e);
         }
 
         private async void UpdateGameState_OnClick(object sender, RoutedEventArgs e)
@@ -115,12 +117,15 @@ namespace Fool.Wpf
         {
             _handArea.Children.Clear();
 
+            var name = IsId1Checked ? "Boris ходит" : "Gleb ходит";
+
+            _turnLabel.Content = name;
             var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 100, Background = Brushes.White };
             _grid.Children.Add(txt);
 
             foreach (var card in gs.Hand)
             {
-                var but = new Button() { Content = card, Height = 40, Width = 70};
+                var but = new Button() { Content = card, Height = 40, Width = 70 };
                 but.Click += Move;
                 _handArea.Children.Add(but);
             }
@@ -132,13 +137,14 @@ namespace Fool.Wpf
         {
             decrement--;
             _timerLable.Content = decrement.ToString();
-        } 
+        }
 
         private async void StartGame(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine($"Id1 is {IsId1Checked}");
             var httpClient = new HttpClient();
-            var str = $"https://localhost:{port}/GameState";
+            int id = IsId1Checked ? 1 : 2;
+            var str = $"https://localhost:{port}/GameState?playerId={id}";
             var str1 = await httpClient.PostAsJsonAsync(str, 0);
         }
 

@@ -5,5 +5,6 @@ namespace Fool.Web
         public string CardOnTheTable { get; set; } = null!;
         public List<string> Hand { get; set; } = null!;
         public TimeSpan TimeToMove { get; set; }
+        public bool IsMineTurn { get; set; }
     }
 }

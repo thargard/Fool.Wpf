@@ -20,6 +20,8 @@
         <Border Grid.Column ="1" Background="#1f3d7a"/>
         <Label x:Name="_timerLable" Content="30" Height="40" Width="60" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top">
         </Label>
+        <Label x:Name="_turnLabel" Content="" Height="40" Width="100" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top">
+        </Label>
         <DockPanel Grid.Column="1">
             <RadioButton GroupName="Id" Content="Boris - 1" DockPanel.Dock="Top" 
                          IsChecked="{Binding Path=IsId1Checked, ElementName=Wiii, Mode=TwoWay}"

@@ -16,14 +16,15 @@ namespace Fool.Web.Controllers
             {
                 CardOnTheTable = CommonState.SharedState.CardOnTheTable,
                 Hand = CommonState.SharedState.Players.Single(p => p.Id == playerId).Hand,
-                TimeToMove = TimeSpan.FromSeconds(30)
+                TimeToMove = TimeSpan.FromSeconds(30),
+                IsMineTurn = CommonState.SharedState.CurrentMovePlayerId == playerId,
             };
 
             return gs;
         }
 
         [HttpPost]
-        public void StartNewGame()
+        public void StartNewGame(int id)
         {
             CommonState.SharedState.Players.Clear();
 
@@ -38,7 +39,7 @@ namespace Fool.Web.Controllers
                     item.Hand.Add(CommonState.SharedState.GetOneCard());
 
 
-            CommonState.SharedState.CurrentMovePlayerId = pl1.Id;
+            CommonState.SharedState.CurrentMovePlayerId = id;
             CommonState.SharedState.CardOnTheTable = CommonState.SharedState.GetOneCard();
         }
     }
