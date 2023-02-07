@@ -79,54 +79,60 @@ namespace Fool.Wpf
         private async void Move(object sender, RoutedEventArgs e)
         {
             // Post запрос
+            
             var httpClient = new HttpClient();
             int id = IsId1Checked ? 1 : 2;
+            
             var card = HttpUtility.UrlEncode("дама пик");
             var str = $"https://localhost:{port}/Move?playerId={id}&card={card}";
             var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
-            str1.EnsureSuccessStatusCode();
+            // str1.EnsureSuccessStatusCode();
+
+            //UpdateUIButton(sender, e);
         }
 
         private async void UpdateGameState_OnClick(object sender, RoutedEventArgs e)
         {
             // как делать GET запрос
             var httpClient = new HttpClient();
+            int id = IsId1Checked ? 1 : 2;
             var gs = await httpClient.GetFromJsonAsync<PlayerGameState>(
-                $"https://localhost:{port}/GameState?playerId=1");
+                $"https://localhost:{port}/GameState?playerId={id}");
             Console.WriteLine(gs);
         }
 
         private async void UpdateUIButton(object sender, RoutedEventArgs e)
         {
             var httpClient = new HttpClient();
+            int id = IsId1Checked ? 1 : 2;
             var gs = await httpClient.GetFromJsonAsync<PlayerGameState>(
-                $"https://localhost:{port}/GameState?playerId=1");
+                $"https://localhost:{port}/GameState?playerId={id}");
 
             UpdateUI(gs);
         }
 
         private void UpdateUI(PlayerGameState gs)
         {
-            var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 50, Background = Brushes.White };
+            _handArea.Children.Clear();
+
+            var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 100, Background = Brushes.White };
             _grid.Children.Add(txt);
 
             foreach (var card in gs.Hand)
             {
-                var but = new Button() { Content = card, Height = 40, Width = 70 };
+                var but = new Button() { Content = card, Height = 40, Width = 70};
+                but.Click += Move;
                 _handArea.Children.Add(but);
             }
             decrement = (int)gs.TimeToMove.TotalSeconds;
             dt.Start();
-
         }
-
-
 
         private void Dt_Tick(object? sender, EventArgs e)
         {
             decrement--;
             _timerLable.Content = decrement.ToString();
-        }
+        } 
 
         private async void StartGame(object sender, RoutedEventArgs e)
         {
@@ -134,8 +140,6 @@ namespace Fool.Wpf
             var httpClient = new HttpClient();
             var str = $"https://localhost:{port}/GameState";
             var str1 = await httpClient.PostAsJsonAsync(str, 0);
-
-
         }
 
     }
