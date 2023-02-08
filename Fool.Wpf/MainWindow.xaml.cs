@@ -46,17 +46,16 @@ namespace Fool.Wpf
         private bool _isId1Checked;
         public bool IsId1Checked { get => _isId1Checked; set => _isId1Checked = value; }
 
-        public string Tttt { get; set; } = "12334567";
 
         public MainWindow()
         {
             IsId1Checked = true;
             InitializeComponent();
-            Binding binding = new Binding();
 
             dt = new DispatcherTimer();
             dt.Interval = TimeSpan.FromSeconds(1);
-            dt.Tick += Dt_Tick;
+            dt.Tick += OnceASecond;
+            dt.Start();
         }
 
         private void OneCard(object sender, RoutedEventArgs e)
@@ -90,7 +89,6 @@ namespace Fool.Wpf
             var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
             // str1.EnsureSuccessStatusCode();
 
-            UpdateUIButton(sender, e);
         }
 
         private async void UpdateGameState_OnClick(object sender, RoutedEventArgs e)
@@ -103,7 +101,7 @@ namespace Fool.Wpf
             Console.WriteLine(gs);
         }
 
-        private async void UpdateUIButton(object sender, RoutedEventArgs e)
+        private async Task UpdateUi()
         {
             var httpClient = new HttpClient();
             int id = IsId1Checked ? 1 : 2;
@@ -130,13 +128,14 @@ namespace Fool.Wpf
                 _handArea.Children.Add(but);
             }
             decrement = (int)gs.TimeToMove.TotalSeconds;
-            dt.Start();
+           
         }
 
-        private void Dt_Tick(object? sender, EventArgs e)
+        private void OnceASecond(object? sender, EventArgs e)
         {
             decrement--;
             _timerLable.Content = decrement.ToString();
+            UpdateUi();
         }
 
         private async void StartGame(object sender, RoutedEventArgs e)
