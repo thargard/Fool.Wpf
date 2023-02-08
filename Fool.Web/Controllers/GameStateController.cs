@@ -24,7 +24,7 @@ namespace Fool.Web.Controllers
         }
 
         [HttpPost]
-        public void StartNewGame(int id)
+        public void StartNewGame(int playerId)
         {
             CommonState.SharedState.Players.Clear();
 
@@ -39,7 +39,7 @@ namespace Fool.Web.Controllers
                     item.Hand.Add(CommonState.SharedState.GetOneCard());
 
 
-            CommonState.SharedState.CurrentMovePlayerId = id;
+            CommonState.SharedState.CurrentMovePlayerId = playerId;
             CommonState.SharedState.CardOnTheTable = CommonState.SharedState.GetOneCard();
         }
     }
