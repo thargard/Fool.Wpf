@@ -58,9 +58,9 @@ namespace Fool.Wpf
             dt.Start();
         }
 
-        private void OneCard(object sender, RoutedEventArgs e)
+        private async void OneCard(object sender, RoutedEventArgs e)
         {
-            if (trash.Count == 36) return;
+            /*if (trash.Count == 36) return;
             Random rnd = new Random();
             int card = rnd.Next(36);
             if (trash.Contains(deck[card]))
@@ -72,7 +72,12 @@ namespace Fool.Wpf
                 var but = new Button() { Content = deck[card], Height = 40, Width = 70 };
                 trash.Add(deck[card]);
                 _handArea.Children.Add(but);
-            }
+            }*/
+
+            var httpClient = new HttpClient();
+            int id  = IsId1Checked? 1 : 2;
+            var str = $"https://localhost:{port}/TakeCard?playerId={id}";
+            var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
         }
 
         private async void Move(object sender, RoutedEventArgs e)
@@ -83,13 +88,15 @@ namespace Fool.Wpf
             int id = IsId1Checked ? 1 : 2;
 
             var cardd = (Button)sender;
-            var card = HttpUtility.UrlEncode((string)cardd.Content);
+            var card = HttpUtility.UrlEncode(cardd.Content.ToString());
 
             var str = $"https://localhost:{port}/Move?playerId={id}&card={card}";
             var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
             // str1.EnsureSuccessStatusCode();
 
         }
+
+
 
         private async void UpdateGameState_OnClick(object sender, RoutedEventArgs e)
         {
@@ -118,12 +125,12 @@ namespace Fool.Wpf
             var name = IsId1Checked ? "Boris ходит" : "Gleb ходит";
 
             _turnLabel.Content = name;
-            var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 100, Background = Brushes.White };
+            var txt = new TextBlock() { Text = gs.CardOnTheTable.Name, Height = 80, Width = 100, Background = Brushes.White };
             _grid.Children.Add(txt);
 
             foreach (var card in gs.Hand)
             {
-                var but = new Button() { Content = card, Height = 40, Width = 70 };
+                var but = new Button() { Content = card.Name, Height = 40, Width = 70 };
                 but.Click += Move;
                 _handArea.Children.Add(but);
             }
