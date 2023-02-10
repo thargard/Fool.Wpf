@@ -10,6 +10,8 @@ public class Player
 }
 
 
+
+
 public class SharedGameState
 {
     // Колода 

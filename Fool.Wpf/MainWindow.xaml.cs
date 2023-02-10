@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonClasses;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -60,20 +61,6 @@ namespace Fool.Wpf
 
         private async void OneCard(object sender, RoutedEventArgs e)
         {
-            /*if (trash.Count == 36) return;
-            Random rnd = new Random();
-            int card = rnd.Next(36);
-            if (trash.Contains(deck[card]))
-            {
-                OneCard(sender, e);
-            }
-            else
-            {
-                var but = new Button() { Content = deck[card], Height = 40, Width = 70 };
-                trash.Add(deck[card]);
-                _handArea.Children.Add(but);
-            }*/
-
             var httpClient = new HttpClient();
             int id  = IsId1Checked? 1 : 2;
             var str = $"https://localhost:{port}/TakeCard?playerId={id}";
@@ -93,10 +80,7 @@ namespace Fool.Wpf
             var str = $"https://localhost:{port}/Move?playerId={id}&card={card}";
             var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
             // str1.EnsureSuccessStatusCode();
-
         }
-
-
 
         private async void UpdateGameState_OnClick(object sender, RoutedEventArgs e)
         {
@@ -125,12 +109,12 @@ namespace Fool.Wpf
             var name = IsId1Checked ? "Boris ходит" : "Gleb ходит";
 
             _turnLabel.Content = name;
-            var txt = new TextBlock() { Text = gs.CardOnTheTable.Name, Height = 80, Width = 100, Background = Brushes.White };
+            var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 100, Background = Brushes.White };
             _grid.Children.Add(txt);
 
             foreach (var card in gs.Hand)
             {
-                var but = new Button() { Content = card.Name, Height = 40, Width = 70 };
+                var but = new Button() { Content = card, Height = 40, Width = 70 };
                 but.Click += Move;
                 _handArea.Children.Add(but);
             }

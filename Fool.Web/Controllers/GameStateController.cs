@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CommonClasses;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Fool.Web.Controllers
 {

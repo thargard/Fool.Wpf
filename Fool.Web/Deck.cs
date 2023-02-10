@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using CommonClasses;
+using System.Reflection;
 
 namespace Fool.Web
 {
@@ -9,8 +10,24 @@ namespace Fool.Web
                 "6 треф", "7 треф", "8 треф", "9 треф", "10 треф", "Валет треф", "Дама треф", "Король треф", "Туз треф",
                 "6 червей", "7 червей", "8 червей", "9 червей", "10 червей", "Валет червей", "Дама червей", "Король червей", "Туз червей"};
 
-        public List<string> Used = new List<string>() { };
+        public List<Card> AllCards2 = new List<Card>();
 
-       
+        public void FillDeck()
+        {
+            string[] suits = { "пик", "червей", "бубей", "треф" };
+            int[] values = { 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            foreach (var suit in suits)
+            {
+                foreach (var value in values)
+                {
+                    Card card = new Card();
+                    card.Value = value;
+                    card.Suit = suit;
+                    AllCards2.Add(card);
+                }
+            }
+        }
+
+        public List<string> Used = new List<string>() { };
     }
 }
