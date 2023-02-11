@@ -19,6 +19,7 @@ public class MoveController : ControllerBase
 
         Player player1 = CommonState.SharedState.Players.Single(p => p.Id == playerId);
         player1.Hand.Remove(card);
+        CommonState.SharedState.LastTurnTime = DateTime.Now;
         if (player1.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
         else CommonState.SharedState.CurrentMovePlayerId = 1;
         return true;

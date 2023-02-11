@@ -9,15 +9,16 @@ namespace Fool.Web.Controllers
     {
 
         [HttpGet]
-        public PlayerGameState Get(int playerId)
+        public PlayerGameState? Get(int playerId)
         {
             // Get from CommonState.SharedState
-
+            if (CommonState.SharedState.Players.Count == 0) { return null;}
+            var turnTime = 31 - (DateTime.Now - CommonState.SharedState.LastTurnTime).TotalSeconds;
             var gs = new PlayerGameState()
             {
                 CardOnTheTable = CommonState.SharedState.CardOnTheTable,
                 Hand = CommonState.SharedState.Players.Single(p => p.Id == playerId).Hand,
-                TimeToMove = TimeSpan.FromSeconds(30),
+                TimeToMove = TimeSpan.FromSeconds(turnTime),
                 IsMineTurn = CommonState.SharedState.CurrentMovePlayerId == playerId,
             };
 
@@ -27,6 +28,7 @@ namespace Fool.Web.Controllers
         [HttpPost]
         public void StartNewGame(int playerId)
         {
+            CommonState.SharedState.LastTurnTime = DateTime.Now;
             CommonState.SharedState.Players.Clear();
 
             Player pl1 = new Player() { Id = 1, Name = "Boris", Hand = new List<string>() };

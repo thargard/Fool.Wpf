@@ -20,6 +20,7 @@ public class SharedGameState
     // последн€€ карта на столе
     public string CardOnTheTable { get; set; }
 
+    public DateTime LastTurnTime { get; set; }
 
     public List<Player> Players { get; set; } = new List<Player>();
 

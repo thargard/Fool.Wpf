@@ -54,7 +54,7 @@ namespace Fool.Wpf
             InitializeComponent();
 
             dt = new DispatcherTimer();
-            dt.Interval = TimeSpan.FromSeconds(1);
+            dt.Interval = TimeSpan.FromSeconds(0.5);
             dt.Tick += OnceASecond;
             dt.Start();
         }
@@ -67,7 +67,12 @@ namespace Fool.Wpf
             var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
         }
 
-        private async void Move(object sender, RoutedEventArgs e)
+        private async void Pass(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private async void MakeMove(object sender, RoutedEventArgs e)
         {
             // Post запрос
 
@@ -82,17 +87,7 @@ namespace Fool.Wpf
             // str1.EnsureSuccessStatusCode();
         }
 
-        private async void UpdateGameState_OnClick(object sender, RoutedEventArgs e)
-        {
-            // как делать GET запрос
-            var httpClient = new HttpClient();
-            int id = IsId1Checked ? 1 : 2;
-            var gs = await httpClient.GetFromJsonAsync<PlayerGameState>(
-                $"https://localhost:{port}/GameState?playerId={id}");
-            Console.WriteLine(gs);
-        }
-
-        private async Task UpdateUi()
+        private async Task GetPlayerState()
         {
             var httpClient = new HttpClient();
             int id = IsId1Checked ? 1 : 2;
@@ -104,10 +99,11 @@ namespace Fool.Wpf
 
         private void UpdateUI(PlayerGameState gs)
         {
+            if (gs == null) return;
             _handArea.Children.Clear();
 
             var name = IsId1Checked ? "Boris ходит" : "Gleb ходит";
-
+            
             _turnLabel.Content = name;
             var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 100, Background = Brushes.White };
             _grid.Children.Add(txt);
@@ -115,18 +111,19 @@ namespace Fool.Wpf
             foreach (var card in gs.Hand)
             {
                 var but = new Button() { Content = card, Height = 40, Width = 70 };
-                but.Click += Move;
+                but.Click += MakeMove;
                 _handArea.Children.Add(but);
             }
             decrement = (int)gs.TimeToMove.TotalSeconds;
-           
+            decrement--;
+            _timerLable.Content = decrement.ToString();
+
         }
 
         private void OnceASecond(object? sender, EventArgs e)
         {
-            decrement--;
-            _timerLable.Content = decrement.ToString();
-            UpdateUi();
+            
+           GetPlayerState();
         }
 
         private async void StartGame(object sender, RoutedEventArgs e)
