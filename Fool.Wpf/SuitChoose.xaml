@@ -1,0 +1,18 @@
+﻿<Window x:Class="Fool.Wpf.SuitChoose"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Fool.Wpf"
+        mc:Ignorable="d"
+        Title="SuitChoose" Height="100" Width="330">
+    <Grid x:Name="_dialogGrid">
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" TextAlignment="Center">Выбирите масть:</TextBlock>
+            <Button Content="Пики" Margin="5" DockPanel.Dock="Left"  Height="30" Width="70" Click="MakeSpades"/>
+            <Button Content="Буби" Margin="5" DockPanel.Dock="Left"  Height="30" Width="70" Click="MakeDiamonds"/>
+            <Button Content="Черви" Margin="5" DockPanel.Dock="Left" Height="30"  Width="70" Click="MakeHearts"/>
+            <Button Content="Трефы" Margin="5"  DockPanel.Dock="Left"  Height="30"  Width="70" Click="MakeClubs"/>
+        </DockPanel>
+    </Grid>
+</Window>

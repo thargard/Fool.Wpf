@@ -69,7 +69,14 @@ namespace Fool.Wpf
 
         private async void Pass(object sender, RoutedEventArgs e)
         {
-            
+            SuitChoose suitChoose = new SuitChoose();
+            var id = IsId1Checked ? 1 : 2;
+            var httpClient = new HttpClient();
+            var plId = await httpClient.GetFromJsonAsync<int>($"https://localhost:{port}/Move?");
+            if (id != plId) { return; }
+            if (suitChoose.ShowDialog() == true)
+            {
+            }
         }
 
         private async void MakeMove(object sender, RoutedEventArgs e)
@@ -110,6 +117,7 @@ namespace Fool.Wpf
             var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 100, Background = Brushes.White };
             _grid.Children.Add(txt);
 
+            _suitLabel.Content = "Масть: " + gs.TopCardSuit;
             foreach (var card in gs.Hand)
             {
                 var but = new Button() { Content = card, Height = 40, Width = 70 };
@@ -133,9 +141,8 @@ namespace Fool.Wpf
             Debug.WriteLine($"Id1 is {IsId1Checked}");
             var httpClient = new HttpClient();
             int id = IsId1Checked ? 1 : 2;
-            var str = $"https://localhost:{port}/GameState?playerId={id}";
+            var str = $"https://localhost:{port}/GameState/Route?playerId={id}";
             var str1 = await httpClient.PostAsJsonAsync(str, 0);
         }
-
     }
 }

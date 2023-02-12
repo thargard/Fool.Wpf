@@ -9,9 +9,6 @@ public class Player
 
 }
 
-
-
-
 public class SharedGameState
 {
     // Колода 
@@ -25,6 +22,8 @@ public class SharedGameState
     public List<Player> Players { get; set; } = new List<Player>();
 
     public int CurrentMovePlayerId { get; set; }
+
+    public string TopCardSuit { get; set; }
 
     public string GetOneCard()
     {

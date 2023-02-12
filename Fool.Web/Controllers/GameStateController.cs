@@ -12,7 +12,7 @@ namespace Fool.Web.Controllers
         public PlayerGameState? Get(int playerId)
         {
             // Get from CommonState.SharedState
-            if (CommonState.SharedState.Players.Count == 0) { return null;}
+            if (CommonState.SharedState.Players.Count == 0) { return null; }
             var turnTime = 31 - (DateTime.Now - CommonState.SharedState.LastTurnTime).TotalSeconds;
             var gs = new PlayerGameState()
             {
@@ -20,12 +20,14 @@ namespace Fool.Web.Controllers
                 Hand = CommonState.SharedState.Players.Single(p => p.Id == playerId).Hand,
                 TimeToMove = TimeSpan.FromSeconds(turnTime),
                 IsMineTurn = CommonState.SharedState.CurrentMovePlayerId == playerId,
+                TopCardSuit = CommonState.SharedState.TopCardSuit
             };
 
             return gs;
         }
 
         [HttpPost]
+        [Route("Route")]
         public void StartNewGame(int playerId)
         {
             CommonState.SharedState.LastTurnTime = DateTime.Now;
@@ -44,6 +46,13 @@ namespace Fool.Web.Controllers
 
             CommonState.SharedState.CurrentMovePlayerId = playerId;
             CommonState.SharedState.CardOnTheTable = CommonState.SharedState.GetOneCard();
+        }
+
+        [HttpPost]//("change-suit/{suit:string}")]
+        [Route("TSPRoute")]
+        public void ChangeSuit(string suit)
+        {
+            CommonState.SharedState.TopCardSuit = suit;
         }
     }
 }
