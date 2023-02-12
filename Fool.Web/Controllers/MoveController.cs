@@ -1,3 +1,4 @@
+using CommonClasses;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
@@ -23,5 +24,12 @@ public class MoveController : ControllerBase
         if (player1.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
         else CommonState.SharedState.CurrentMovePlayerId = 1;
         return true;
+    }
+
+    [HttpGet]
+    public int? Get()
+    {
+        if (CommonState.SharedState.Players.Count == 0) { return null; }
+        return CommonState.SharedState.CurrentMovePlayerId;
     }
 }

@@ -97,13 +97,15 @@ namespace Fool.Wpf
             UpdateUI(gs);
         }
 
-        private void UpdateUI(PlayerGameState gs)
+        private async void UpdateUI(PlayerGameState gs)
         {
             if (gs == null) return;
             _handArea.Children.Clear();
 
-            var name = IsId1Checked ? "Boris ходит" : "Gleb ходит";
-            
+            var httpClient = new HttpClient();
+            var id = await httpClient.GetFromJsonAsync<int>($"https://localhost:{port}/Move?");
+            var name = id == 1? "Boris ходит" : "Gleb ходит"; 
+
             _turnLabel.Content = name;
             var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 100, Background = Brushes.White };
             _grid.Children.Add(txt);
