@@ -30,11 +30,13 @@ namespace Fool.Web.Controllers
         [Route("Route")]
         public void StartNewGame(int playerId)
         {
+            CommonState.SharedState.Deck.FillDeck();
+
             CommonState.SharedState.LastTurnTime = DateTime.Now;
             CommonState.SharedState.Players.Clear();
 
-            Player pl1 = new Player() { Id = 1, Name = "Boris", Hand = new List<string>() };
-            Player pl2 = new Player() { Id = 2, Name = "Gleb", Hand = new List<string>() };
+            Player pl1 = new Player() { Id = 1, Name = "Boris", Hand = new List<Card>() };
+            Player pl2 = new Player() { Id = 2, Name = "Gleb", Hand = new List<Card>() };
 
             CommonState.SharedState.Players.Add(pl1);
             CommonState.SharedState.Players.Add(pl2);

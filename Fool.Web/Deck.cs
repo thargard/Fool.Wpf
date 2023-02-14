@@ -29,5 +29,7 @@ namespace Fool.Web
         }
 
         public List<string> Used = new List<string>() { };
+
+        public List<Card> Used2 = new List<Card>() { };
     }
 }

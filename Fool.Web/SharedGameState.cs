@@ -1,3 +1,5 @@
+using CommonClasses;
+
 namespace Fool.Web;
 
 
@@ -5,7 +7,7 @@ public class Player
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public List<string> Hand { get; set; } = null!;
+    public List<Card> Hand { get; set; } = null!;
 
 }
 
@@ -15,7 +17,7 @@ public class SharedGameState
     public Deck Deck { get; set; } = new Deck();
 
     // последн€€ карта на столе
-    public string CardOnTheTable { get; set; }
+    public Card CardOnTheTable { get; set; }
 
     public DateTime LastTurnTime { get; set; }
 
@@ -25,29 +27,29 @@ public class SharedGameState
 
     public string TopCardSuit { get; set; }
 
-    public string GetOneCard()
+    public Card GetOneCard()
     {
         if (Deck.Used.Count == 36)
         {
-            Deck.Used.Clear();
+            Deck.Used2.Clear();
             foreach (var player in Players)
-                Deck.Used.AddRange(player.Hand);
+                Deck.Used2.AddRange(player.Hand);
             
-            Deck.Used.Add(CardOnTheTable);
+            Deck.Used2.Add(CardOnTheTable);
             return GetOneCard();
 
         }
         Random rnd = new Random();
         int card = rnd.Next(36);
-        if (Deck.Used.Contains(Deck.AllCrads[card]))
+        if (Deck.Used2.Contains(Deck.AllCards2[card]))
         {
             return GetOneCard();
         }
         
         else
         {
-            Deck.Used.Add(Deck.AllCrads[card]);
-            return Deck.AllCrads[card];
+            Deck.Used2.Add(Deck.AllCards2[card]);
+            return Deck.AllCards2[card];
         }
     }
 }

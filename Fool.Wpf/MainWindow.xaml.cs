@@ -38,6 +38,7 @@ namespace Fool.Wpf
                 "6 чирв", "7 чирв", "8 чирв", "9 чирв", "10 чирв", "Валет чирв", "Дама чирв", "Король чирв", "Туз чирв"};
 
         List<string> trash = new List<string>() { "7 треф" };
+
         private DispatcherTimer dt;
 
         private int port = 5001;
@@ -54,7 +55,7 @@ namespace Fool.Wpf
             InitializeComponent();
 
             dt = new DispatcherTimer();
-            dt.Interval = TimeSpan.FromSeconds(0.5);
+            dt.Interval = TimeSpan.FromSeconds(1);
             dt.Tick += OnceASecond;
             dt.Start();
         }
@@ -114,13 +115,13 @@ namespace Fool.Wpf
             var name = id == 1? "Boris ходит" : "Gleb ходит"; 
 
             _turnLabel.Content = name;
-            var txt = new TextBlock() { Text = gs.CardOnTheTable, Height = 80, Width = 100, Background = Brushes.White };
+            var txt = new TextBlock() { Text = gs.CardOnTheTable.Name, Height = 80, Width = 100, Background = Brushes.White };
             _grid.Children.Add(txt);
 
             _suitLabel.Content = "Масть: " + gs.TopCardSuit;
             foreach (var card in gs.Hand)
             {
-                var but = new Button() { Content = card, Height = 40, Width = 70 };
+                var but = new Button() { Content = card.Name, Height = 40, Width = 70 };
                 but.Click += MakeMove;
                 _handArea.Children.Add(but);
             }
