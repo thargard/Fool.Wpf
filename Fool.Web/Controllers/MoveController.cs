@@ -10,10 +10,10 @@ namespace Fool.Web.Controllers;
 public class MoveController : ControllerBase
 {
     [HttpPost]
-    public bool Post(int playerId, string card)
+    public IActionResult Post(int playerId, string card)
     {
         if (playerId != CommonState.SharedState.CurrentMovePlayerId)
-            return false;
+            return StatusCode(StatusCodes.Status406NotAcceptable);
 
         // Change CommonState.SharedState
         Card ncard = new Card();
@@ -32,6 +32,12 @@ public class MoveController : ControllerBase
             default: break;
         }
         ncard.Suit = arr[1];
+
+        if (ncard.Suit != CommonState.SharedState.CardOnTheTable.Suit && ncard.Value != CommonState.SharedState.CardOnTheTable.Value) 
+        {
+            return StatusCode(StatusCodes.Status406NotAcceptable);
+        }
+
         CommonState.SharedState.CardOnTheTable = ncard;
 
         Player player1 = CommonState.SharedState.Players.Single(p => p.Id == playerId);
@@ -47,7 +53,7 @@ public class MoveController : ControllerBase
         CommonState.SharedState.LastTurnTime = DateTime.Now;
         if (player1.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
         else CommonState.SharedState.CurrentMovePlayerId = 1;
-        return true;
+        return StatusCode(StatusCodes.Status201Created);
     }
 
     [HttpGet]

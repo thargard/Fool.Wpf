@@ -63,7 +63,7 @@ namespace Fool.Wpf
         private async void OneCard(object sender, RoutedEventArgs e)
         {
             var httpClient = new HttpClient();
-            int id  = IsId1Checked? 1 : 2;
+            int id = IsId1Checked ? 1 : 2;
             var str = $"https://localhost:{port}/TakeCard?playerId={id}";
             var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
         }
@@ -75,15 +75,13 @@ namespace Fool.Wpf
             var httpClient = new HttpClient();
             var plId = await httpClient.GetFromJsonAsync<int>($"https://localhost:{port}/Move?");
             if (id != plId) { return; }
-            if (suitChoose.ShowDialog() == true)
-            {
-            }
+            suitChoose.ShowDialog();
         }
 
         private async void MakeMove(object sender, RoutedEventArgs e)
         {
             // Post запрос
-
+            ErrorWindow erw = new ErrorWindow();
             var httpClient = new HttpClient();
             int id = IsId1Checked ? 1 : 2;
 
@@ -91,8 +89,11 @@ namespace Fool.Wpf
             var card = HttpUtility.UrlEncode(cardd.Content.ToString());
 
             var str = $"https://localhost:{port}/Move?playerId={id}&card={card}";
-            var str1 = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
-            // str1.EnsureSuccessStatusCode();
+
+            var response = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotAcceptable)
+                erw.ShowDialog();
         }
 
         private async Task GetPlayerState()
@@ -112,7 +113,7 @@ namespace Fool.Wpf
 
             var httpClient = new HttpClient();
             var id = await httpClient.GetFromJsonAsync<int>($"https://localhost:{port}/Move?");
-            var name = id == 1? "Boris ходит" : "Gleb ходит"; 
+            var name = id == 1 ? "Boris ходит" : "Gleb ходит";
 
             _turnLabel.Content = name;
             var txt = new TextBlock() { Text = gs.CardOnTheTable.Name, Height = 80, Width = 100, Background = Brushes.White };
@@ -128,13 +129,11 @@ namespace Fool.Wpf
             decrement = (int)gs.TimeToMove.TotalSeconds;
             decrement--;
             _timerLable.Content = decrement.ToString();
-
         }
 
         private void OnceASecond(object? sender, EventArgs e)
         {
-            
-           GetPlayerState();
+            GetPlayerState();
         }
 
         private async void StartGame(object sender, RoutedEventArgs e)
