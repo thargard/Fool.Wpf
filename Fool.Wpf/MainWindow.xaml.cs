@@ -70,12 +70,27 @@ namespace Fool.Wpf
 
         private async void Pass(object sender, RoutedEventArgs e)
         {
-            SuitChoose suitChoose = new SuitChoose();
+            ErrorWindow erw = new ErrorWindow();
+            var httpClient = new HttpClient();
+            int id = IsId1Checked ? 1 : 2;
+
+            var str = $"https://localhost:{port}/Move/RouteN?playerId={id}";
+            var response = await httpClient.PostAsJsonAsync(str, 0 );
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotAcceptable)
+                erw.ShowDialog();
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+                erw.ShowDialog();
+
+
+
+            /*SuitChoose suitChoose = new SuitChoose();
             var id = IsId1Checked ? 1 : 2;
             var httpClient = new HttpClient();
             var plId = await httpClient.GetFromJsonAsync<int>($"https://localhost:{port}/Move?");
             if (id != plId) { return; }
-            suitChoose.ShowDialog();
+            suitChoose.ShowDialog();*/
         }
 
         private async void MakeMove(object sender, RoutedEventArgs e)
@@ -88,7 +103,7 @@ namespace Fool.Wpf
             var cardd = (Button)sender;
             var card = HttpUtility.UrlEncode(cardd.Content.ToString());
 
-            var str = $"https://localhost:{port}/Move?playerId={id}&card={card}";
+            var str = $"https://localhost:{port}/Move/Route?playerId={id}&card={card}";
 
             var response = await httpClient.PostAsJsonAsync(str, 0 /*об этом пока не думать*/);
 

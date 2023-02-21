@@ -10,6 +10,7 @@ namespace Fool.Web.Controllers;
 public class MoveController : ControllerBase
 {
     [HttpPost]
+    [Route("Route")]
     public IActionResult Post(int playerId, string card)
     {
         if (playerId != CommonState.SharedState.CurrentMovePlayerId)
@@ -33,7 +34,7 @@ public class MoveController : ControllerBase
         }
         ncard.Suit = arr[1];
 
-        if (ncard.Suit != CommonState.SharedState.CardOnTheTable.Suit && ncard.Value != CommonState.SharedState.CardOnTheTable.Value) 
+        if (ncard.Suit != CommonState.SharedState.CardOnTheTable.Suit && ncard.Value != CommonState.SharedState.CardOnTheTable.Value)
         {
             return StatusCode(StatusCodes.Status406NotAcceptable);
         }
@@ -55,6 +56,43 @@ public class MoveController : ControllerBase
         else CommonState.SharedState.CurrentMovePlayerId = 1;
         return StatusCode(StatusCodes.Status201Created);
     }
+
+    [HttpPost]
+    [Route("RouteN")]
+    public IActionResult Post(int playerId)
+    {
+        if (playerId != CommonState.SharedState.CurrentMovePlayerId)
+            return StatusCode(StatusCodes.Status406NotAcceptable);
+
+        Player player1 = CommonState.SharedState.Players.Single(p => p.Id == playerId);
+
+        int coincidence = 0;
+
+        string suit = CommonState.SharedState.CardOnTheTable.Suit;
+        int value = CommonState.SharedState.CardOnTheTable.Value;
+
+        var card = new Card() { Value = 12 };
+
+        if (player1.Hand.Contains(card)) { return StatusCode(StatusCodes.Status409Conflict); }
+        else
+        {
+            foreach (var crd in player1.Hand)
+            {
+                if (crd.Value == value || crd.Suit == suit)
+                    coincidence++;
+            }
+
+            if (coincidence == 0)
+            {
+                if (player1.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
+                else CommonState.SharedState.CurrentMovePlayerId = 1;
+            }
+            if (coincidence >= 1) {return StatusCode(StatusCodes.Status409Conflict);}
+        }
+        return StatusCode(StatusCodes.Status201Created);
+    }
+
+
 
     [HttpGet]
     public int? Get()
