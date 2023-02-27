@@ -35,13 +35,12 @@ public class MoveController : ControllerBase
         ncard.Suit = arr[1];
 
         if (ncard.Suit != CommonState.SharedState.CardOnTheTable.Suit && ncard.Value != CommonState.SharedState.CardOnTheTable.Value)
-        {
             return StatusCode(StatusCodes.Status406NotAcceptable);
-        }
 
         CommonState.SharedState.CardOnTheTable = ncard;
 
         Player player1 = CommonState.SharedState.Players.Single(p => p.Id == playerId);
+        Player player2 = CommonState.SharedState.Players.Single(p => p.Id != playerId);
 
         var nlist = new List<Card>();
         foreach (var crd in player1.Hand)
@@ -52,6 +51,20 @@ public class MoveController : ControllerBase
 
         //player1.Hand.Remove(ncard);
         CommonState.SharedState.LastTurnTime = DateTime.Now;
+        if (ncard.Value == 8)
+            return StatusCode(StatusCodes.Status403Forbidden);
+        if (ncard.Value == 7)
+        {
+            player2.Hand.Add(CommonState.SharedState.GetOneCard());
+            return StatusCode(StatusCodes.Status403Forbidden);
+        }
+        if (ncard.Value == 6)
+        {
+            player2.Hand.Add(CommonState.SharedState.GetOneCard());
+            player2.Hand.Add(CommonState.SharedState.GetOneCard());
+            return StatusCode(StatusCodes.Status403Forbidden);
+        }
+
         if (player1.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
         else CommonState.SharedState.CurrentMovePlayerId = 1;
         return StatusCode(StatusCodes.Status201Created);
@@ -87,7 +100,7 @@ public class MoveController : ControllerBase
                 if (player1.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
                 else CommonState.SharedState.CurrentMovePlayerId = 1;
             }
-            if (coincidence >= 1) {return StatusCode(StatusCodes.Status409Conflict);}
+            if (coincidence >= 1) { return StatusCode(StatusCodes.Status409Conflict); }
         }
         return StatusCode(StatusCodes.Status201Created);
     }
