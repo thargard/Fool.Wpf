@@ -39,7 +39,7 @@ namespace Fool.Tests
         [Fact]
         public void CanAlwaysPlayQueen()
         {
-            CommonState.SharedState.Players[0].Hand[0] = new Card(12, "Трефы");
+            CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.Queen, "Трефы");
             _moveController.Post(1).Should().BeOfType<StatusCodeResult>()
                 .Subject.StatusCode.Should().Be(StatusCodes.Status409Conflict);
         }

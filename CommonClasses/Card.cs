@@ -1,13 +1,17 @@
 ﻿namespace CommonClasses
 {
-    public class Card
+    public enum CardValue
     {
-        public int Value { get; }
+        Six = 6, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace
+    }
+    public sealed class Card
+    {
+        public CardValue Value { get; }
         public string Suit { get; }
 
-        public Card(int value, string suit)
+        public Card(CardValue value, string suit)
         {
-            if (value < 6 || value > 14)
+            if (value < CardValue.Six || value > CardValue.Ace)
                 throw new ArgumentOutOfRangeException(nameof(value), "Should be >= 6 and <= 14");
             Value = value;
             Suit = suit;
@@ -16,15 +20,11 @@
         public string Name =>
             Value switch
             {
-                6 => $"{Value} {Suit}",
-                7 => $"{Value} {Suit}",
-                8 => $"{Value} {Suit}",
-                9 => $"{Value} {Suit}",
-                10 => $"{Value} {Suit}",
-                11 => $"Валет {Suit}",
-                12 => $"Дама {Suit}",
-                13 => $"Король {Suit}",
-                14 => $"Туз {Suit}",
+                < CardValue.Jack => $"{(int)Value} {Suit}",
+                CardValue.Jack => $"Валет {Suit}",
+                CardValue.Queen => $"Дама {Suit}",
+                CardValue.King => $"Король {Suit}",
+                CardValue.Ace => $"Туз {Suit}",
                 _ => throw new ArgumentOutOfRangeException()
             };
     }

@@ -15,19 +15,19 @@ public class MoveController : ControllerBase
             return StatusCode(StatusCodes.Status406NotAcceptable);
 
         // Change CommonState.SharedState
-        var newCardValue = 0;
+        var newCardValue = default(CardValue);
         string[] arr = card.Split(' ');
         switch (arr[0])
         {
-            case "6": newCardValue = 6; break;
-            case "7": newCardValue = 7; break;
-            case "8": newCardValue = 8; break;
-            case "9": newCardValue = 9; break;
-            case "10": newCardValue = 10; break;
-            case "Валет": newCardValue = 11; break;
-            case "Дама": newCardValue = 12; break;
-            case "Король": newCardValue = 13; break;
-            case "Туз": newCardValue = 14; break;
+            case "6": newCardValue = CardValue.Six; break;
+            case "7": newCardValue = CardValue.Seven; break;
+            case "8": newCardValue = CardValue.Eight; break;
+            case "9": newCardValue = CardValue.Nine; break;
+            case "10": newCardValue = CardValue.Ten; break;
+            case "Валет": newCardValue = CardValue.Jack; break;
+            case "Дама": newCardValue = CardValue.Queen; break;
+            case "Король": newCardValue = CardValue.King; break;
+            case "Туз": newCardValue = CardValue.Ace; break;
             default: break;
         }
         Card ncard = new Card(newCardValue, arr[1]);
@@ -49,14 +49,14 @@ public class MoveController : ControllerBase
 
         //player1.Hand.Remove(ncard);
         CommonState.SharedState.LastTurnTime = DateTime.Now;
-        if (ncard.Value == 8)
+        if (ncard.Value == CardValue.Eight)
             return StatusCode(StatusCodes.Status403Forbidden);
-        if (ncard.Value == 7)
+        if (ncard.Value == CardValue.Seven)
         {
             player2.Hand.Add(CommonState.SharedState.GetOneCard());
             return StatusCode(StatusCodes.Status403Forbidden);
         }
-        if (ncard.Value == 6)
+        if (ncard.Value == CardValue.Six)
         {
             player2.Hand.Add(CommonState.SharedState.GetOneCard());
             player2.Hand.Add(CommonState.SharedState.GetOneCard());
@@ -83,9 +83,9 @@ public class MoveController : ControllerBase
         int coincidence = 0;
 
         string suit = CommonState.SharedState.CardOnTheTable.Suit;
-        int value = CommonState.SharedState.CardOnTheTable.Value;
+        var value = CommonState.SharedState.CardOnTheTable.Value;
 
-        if (player.Hand.Any(c => c.Value == 12))
+        if (player.Hand.Any(c => c.Value == CardValue.Queen))
         {
             return StatusCode(StatusCodes.Status409Conflict);
         }
