@@ -3,14 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Fool.Wpf"
         mc:Ignorable="d"
         Title="ErrorWindow" Height="110" Width="180">
-    <Grid x:Name="_errGrid">
+    <Grid >
         <DockPanel Background="DarkViolet">
             <TextBlock DockPanel.Dock="Top" TextAlignment="Center">Вы не можете так походить!</TextBlock>
             <TextBlock DockPanel.Dock="Top" TextAlignment="Center">Попробуйте другую карту!</TextBlock>
-            <Button DockPanel.Dock="Top" Width="160" Height="45" Click="GetError">OK</Button>
+            <Button DockPanel.Dock="Top" Width="160" Height="45" Click="OnClick">OK</Button>
         </DockPanel>
     </Grid>
 </Window>

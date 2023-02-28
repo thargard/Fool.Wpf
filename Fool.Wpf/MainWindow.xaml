@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Fool.Wpf"
         mc:Ignorable="d"
         x:Name="Wiii"
         Title="MainWindow" Height="450" Width="800">
@@ -20,18 +19,18 @@
         <Border Grid.Column ="1" Background="#1f3d7a"/>
         <Label x:Name="_timerLable" Content="30" Height="40" Width="60" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top">
         </Label>
-        <Label x:Name="_turnLabel" Content="" Height="40" Width="100" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <Label x:Name="PlayerToMoveLabel" Content="" Height="40" Width="100" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top">
         </Label>
-        <Label x:Name="_suitLabel" Content="" Height="40" Width="100" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+        <Label x:Name="_currentSuitLabel" Content="" Height="40" Width="100" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom">
         </Label>
         <DockPanel Grid.Column="1">
             <RadioButton GroupName="Id" Content="Boris - 1" DockPanel.Dock="Top" 
-                         IsChecked="{Binding Path=IsId1Checked, ElementName=Wiii, Mode=TwoWay}"
+                         IsChecked="{Binding Path=IsBorisRadioButtonSelected, ElementName=Wiii, Mode=TwoWay}"
                          Height="20" Width="70"/>
             <RadioButton GroupName="Id" Content="Gleb - 2" DockPanel.Dock="Top"  Height="20" Width="70" />
             <Button Content="Start game" DockPanel.Dock="Top"  Height="30" Width="70" Click="StartGame"/>
-            <Button Content="Take 1 card" DockPanel.Dock="Top" Height="30" Margin="5" Width="70" Click="OneCard"/>
-            <Button Content="Pass"  DockPanel.Dock="Top"  Height="30" Margin="5" Width="70" Click="Pass"/>
+            <Button Content="Take 1 card" DockPanel.Dock="Top" Height="30" Margin="5" Width="70" Click="DrawOneCard"/>
+            <Button Content="PassOneMove"  DockPanel.Dock="Top"  Height="30" Margin="5" Width="70" Click="PassOneMove"/>
         </DockPanel>
 
         <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#151"/>
@@ -41,5 +40,9 @@
 
             </StackPanel>
         </ScrollViewer>
+        <TextBlock x:Name="CardOnTheTable"
+                   Width="80"
+                   Height="100"
+                   Background="White"></TextBlock>
     </Grid>
 </Window>

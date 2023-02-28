@@ -1,4 +1,4 @@
-using CommonClasses;
+п»їusing CommonClasses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fool.Web.Controllers;
@@ -24,10 +24,10 @@ public class MoveController : ControllerBase
             case "8": newCardValue = CardValue.Eight; break;
             case "9": newCardValue = CardValue.Nine; break;
             case "10": newCardValue = CardValue.Ten; break;
-            case "Валет": newCardValue = CardValue.Jack; break;
-            case "Дама": newCardValue = CardValue.Queen; break;
-            case "Король": newCardValue = CardValue.King; break;
-            case "Туз": newCardValue = CardValue.Ace; break;
+            case "Р’Р°Р»РµС‚": newCardValue = CardValue.Jack; break;
+            case "Р”Р°РјР°": newCardValue = CardValue.Queen; break;
+            case "РљРѕСЂРѕР»СЊ": newCardValue = CardValue.King; break;
+            case "РўСѓР·": newCardValue = CardValue.Ace; break;
             default: break;
         }
         Card ncard = new Card(newCardValue, arr[1]);
