@@ -2,33 +2,30 @@
 {
     public class Card
     {
-        public int Value { get; set; }
-        public string Suit { get; set; }
+        public int Value { get; }
+        public string Suit { get; }
 
         public Card(int value, string suit)
         {
+            if (value < 6 || value > 14)
+                throw new ArgumentOutOfRangeException(nameof(value), "Should be >= 6 and <= 14");
             Value = value;
             Suit = suit;
         }
 
-        public string Name => GetName();
-
-        private string GetName()
-        {
-           switch (Value)
+        public string Name =>
+            Value switch
             {
-                case 6:  
-                case 7:  
-                case 8:  
-                case 9:  
-                case 10: return $"{Value} {Suit}";
-                case 11: return $"Валет {Suit}";
-                case 12: return $"Дама {Suit}";
-                case 13: return $"Король {Suit}";
-                case 14:
-                default:
-                    return $"Туз {Suit}";
-            }
-        }
+                6 => $"{Value} {Suit}",
+                7 => $"{Value} {Suit}",
+                8 => $"{Value} {Suit}",
+                9 => $"{Value} {Suit}",
+                10 => $"{Value} {Suit}",
+                11 => $"Валет {Suit}",
+                12 => $"Дама {Suit}",
+                13 => $"Король {Suit}",
+                14 => $"Туз {Suit}",
+                _ => throw new ArgumentOutOfRangeException()
+            };
     }
 }
