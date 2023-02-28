@@ -7,7 +7,6 @@ namespace Fool.Web.Controllers
     [Route("[controller]")]
     public class GameStateController : ControllerBase
     {
-
         [HttpGet]
         public PlayerGameState? Get(int playerId)
         {
@@ -27,7 +26,6 @@ namespace Fool.Web.Controllers
         }
 
         [HttpPost]
-        [Route("Route")]
         public void StartNewGame(int playerId)
         {
             CommonState.SharedState.Deck.FillDeck();
@@ -51,8 +49,8 @@ namespace Fool.Web.Controllers
             CommonState.SharedState.GameIsGoing = true;
         }
 
-        [HttpPost]//("change-suit/{suit:string}")]
-        [Route("TSPRoute")]
+        [HttpPost]
+        [Route("CurrentSuit")]
         public void ChangeSuit(string suit)
         {
             CommonState.SharedState.TopCardSuit = suit;

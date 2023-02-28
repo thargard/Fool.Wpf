@@ -60,7 +60,7 @@ namespace Fool.Wpf
         private async void StartGame(object sender, RoutedEventArgs e)
         {
             await _httpClient.PostAsJsonAsync(
-                $"https://localhost:{Port}/GameState/Route?playerId={GetCurrentPlayerId()}", 
+                $"https://localhost:{Port}/GameState?playerId={GetCurrentPlayerId()}", 
                 0);
         }
 

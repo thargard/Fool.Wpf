@@ -1,7 +1,6 @@
 ﻿namespace Fool.Web.Controllers;
 
-public static class CommonState // "имя"
+public static class CommonState
 {
-    // глобальная переменная
-    public static SharedGameState SharedState { get; set; } = new SharedGameState();
+    public static SharedGameState SharedState { get;  } = new();
 }

@@ -19,7 +19,7 @@ namespace Fool.Wpf
         private async void MakeSpades(object sender, RoutedEventArgs e)
         {
             var httpClient = new HttpClient();
-            var str = $"https://localhost:{port}/GameState/TSPRoute?suit=Пики";
+            var str = $"https://localhost:{port}/GameState/CurrentSuit?suit=Пики";
             var str1 = await httpClient.PostAsJsonAsync(str, 0);
             this.DialogResult = true;
         }
@@ -27,7 +27,7 @@ namespace Fool.Wpf
         private async void MakeDiamonds(object sender, RoutedEventArgs e)
         {
             var httpClient = new HttpClient();
-            var str = $"https://localhost:{port}/GameState/TSPRoute?suit=Буби";
+            var str = $"https://localhost:{port}/GameState/CurrentSuit?suit=Буби";
             var str1 = await httpClient.PostAsJsonAsync(str, 0);
             this.DialogResult = true;
         }
@@ -35,7 +35,7 @@ namespace Fool.Wpf
         private async void MakeHearts(object sender, RoutedEventArgs e)
         {
             var httpClient = new HttpClient();
-            var str = $"https://localhost:{port}/GameState/TSPRoute?suit=Черви";
+            var str = $"https://localhost:{port}/GameState/CurrentSuit?suit=Черви";
             var str1 = await httpClient.PostAsJsonAsync(str, 0);
             this.DialogResult = true;
         }
@@ -43,7 +43,7 @@ namespace Fool.Wpf
         private async void MakeClubs(object sender, RoutedEventArgs e)
         {
             var httpClient = new HttpClient();
-            var str = $"https://localhost:{port}/GameState/TSPRoute?suit=Трефы";
+            var str = $"https://localhost:{port}/GameState/CurrentSuit?suit=Трефы";
             var str1 = await httpClient.PostAsJsonAsync(str, 0);
             this.DialogResult = true;
         }
