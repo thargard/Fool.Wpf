@@ -15,22 +15,22 @@ public class MoveController : ControllerBase
             return StatusCode(StatusCodes.Status406NotAcceptable);
 
         // Change CommonState.SharedState
-        Card ncard = new Card();
+        var newCardValue = 0;
         string[] arr = card.Split(' ');
         switch (arr[0])
         {
-            case "6": ncard.Value = 6; break;
-            case "7": ncard.Value = 7; break;
-            case "8": ncard.Value = 8; break;
-            case "9": ncard.Value = 9; break;
-            case "10": ncard.Value = 10; break;
-            case "Валет": ncard.Value = 11; break;
-            case "Дама": ncard.Value = 12; break;
-            case "Король": ncard.Value = 13; break;
-            case "Туз": ncard.Value = 14; break;
+            case "6": newCardValue = 6; break;
+            case "7": newCardValue = 7; break;
+            case "8": newCardValue = 8; break;
+            case "9": newCardValue = 9; break;
+            case "10": newCardValue = 10; break;
+            case "Валет": newCardValue = 11; break;
+            case "Дама": newCardValue = 12; break;
+            case "Король": newCardValue = 13; break;
+            case "Туз": newCardValue = 14; break;
             default: break;
         }
-        ncard.Suit = arr[1];
+        Card ncard = new Card(newCardValue, arr[1]);
 
         if (ncard.Suit != CommonState.SharedState.CardOnTheTable.Suit && ncard.Value != CommonState.SharedState.CardOnTheTable.Value)
             return StatusCode(StatusCodes.Status406NotAcceptable);
@@ -72,22 +72,26 @@ public class MoveController : ControllerBase
     [Route("RouteN")]
     public IActionResult Post(int playerId)
     {
+        if (!CommonState.SharedState.GameIsGoing)
+            return BadRequest("The current game is not started or finished!");
+
         if (playerId != CommonState.SharedState.CurrentMovePlayerId)
             return StatusCode(StatusCodes.Status406NotAcceptable);
 
-        Player player1 = CommonState.SharedState.Players.Single(p => p.Id == playerId);
+        var player = CommonState.SharedState.Players.Single(p => p.Id == playerId);
 
         int coincidence = 0;
 
         string suit = CommonState.SharedState.CardOnTheTable.Suit;
         int value = CommonState.SharedState.CardOnTheTable.Value;
 
-        var card = new Card() { Value = 12 };
-
-        if (player1.Hand.Contains(card)) { return StatusCode(StatusCodes.Status409Conflict); }
+        if (player.Hand.Any(c => c.Value == 12))
+        {
+            return StatusCode(StatusCodes.Status409Conflict);
+        }
         else
         {
-            foreach (var crd in player1.Hand)
+            foreach (var crd in player.Hand)
             {
                 if (crd.Value == value || crd.Suit == suit)
                     coincidence++;
@@ -95,7 +99,7 @@ public class MoveController : ControllerBase
 
             if (coincidence == 0)
             {
-                if (player1.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
+                if (player.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
                 else CommonState.SharedState.CurrentMovePlayerId = 1;
             }
             if (coincidence >= 1) { return StatusCode(StatusCodes.Status409Conflict); }

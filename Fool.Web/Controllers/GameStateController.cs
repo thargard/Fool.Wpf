@@ -48,6 +48,7 @@ namespace Fool.Web.Controllers
 
             CommonState.SharedState.CurrentMovePlayerId = playerId;
             CommonState.SharedState.CardOnTheTable = CommonState.SharedState.GetOneCard();
+            CommonState.SharedState.GameIsGoing = true;
         }
 
         [HttpPost]//("change-suit/{suit:string}")]

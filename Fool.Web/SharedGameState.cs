@@ -13,6 +13,8 @@ public class Player
 
 public class SharedGameState
 {
+    // false if the current game is not started or finished
+    public bool GameIsGoing { get; set; }
     // Колода 
     public Deck Deck { get; set; } = new Deck();
 

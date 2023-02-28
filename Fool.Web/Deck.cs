@@ -19,9 +19,7 @@ namespace Fool.Web
             {
                 foreach (var value in values)
                 {
-                    Card card = new Card();
-                    card.Value = value;
-                    card.Suit = suit;
+                    Card card = new Card(value, suit);
                     AllCards2.Add(card);
                 }
             }
