@@ -35,7 +35,7 @@ namespace Fool.Wpf
         private async void PassOneMove(object sender, RoutedEventArgs e)
         {
             var response = await _httpClient.PostAsJsonAsync(
-                $"https://localhost:{Port}/Move/RouteN?playerId={GetCurrentPlayerId()}", 0);
+                $"https://localhost:{Port}/Move?playerId={GetCurrentPlayerId()}&command=skip", 0);
 
             switch (response.StatusCode)
             {
@@ -51,7 +51,7 @@ namespace Fool.Wpf
             var cardButton = (Button)sender;
             var card = HttpUtility.UrlEncode(cardButton.Content.ToString());
             var response = await _httpClient.PostAsJsonAsync(
-                $"https://localhost:{Port}/Move/Route?playerId={GetCurrentPlayerId()}&card={card}",
+                $"https://localhost:{Port}/Move?playerId={GetCurrentPlayerId()}&command={card}",
                 0);
 
             if (response.StatusCode == System.Net.HttpStatusCode.NotAcceptable)

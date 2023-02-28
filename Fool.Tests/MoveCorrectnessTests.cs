@@ -15,7 +15,7 @@ namespace Fool.Tests
         [Fact]
         public void IncorrectPlayerId()
         {
-            _moveController.Post(2).Should().BeOfType<BadRequestObjectResult>()
+            _moveController.Post(2, "skip").Should().BeOfType<BadRequestObjectResult>()
                 .Subject.Value.Should().Be("The current game is not started or finished!");
         }
 
@@ -32,7 +32,7 @@ namespace Fool.Tests
         [Fact]
         public void CorrectPlayerToMove()
         {
-            _moveController.Post(2).Should().BeOfType<StatusCodeResult>()
+            _moveController.Post(2, "skip").Should().BeOfType<StatusCodeResult>()
                 .Subject.StatusCode.Should().Be(StatusCodes.Status406NotAcceptable);
         }
      
@@ -40,7 +40,7 @@ namespace Fool.Tests
         public void CanAlwaysPlayQueen()
         {
             CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.Queen, "Трефы");
-            _moveController.Post(1).Should().BeOfType<StatusCodeResult>()
+            _moveController.Post(1, "skip").Should().BeOfType<StatusCodeResult>()
                 .Subject.StatusCode.Should().Be(StatusCodes.Status409Conflict);
         }
     }

@@ -8,15 +8,16 @@ namespace Fool.Web.Controllers;
 public class MoveController : ControllerBase
 {
     [HttpPost]
-    [Route("Route")]
-    public IActionResult Post(int playerId, string card)
+    public IActionResult Post(int playerId, string command)
     {
+        if (command == "skip")
+            return Skip(playerId);
         if (playerId != CommonState.SharedState.CurrentMovePlayerId)
             return StatusCode(StatusCodes.Status406NotAcceptable);
 
         // Change CommonState.SharedState
         var newCardValue = default(CardValue);
-        string[] arr = card.Split(' ');
+        string[] arr = command.Split(' ');
         switch (arr[0])
         {
             case "6": newCardValue = CardValue.Six; break;
@@ -68,9 +69,8 @@ public class MoveController : ControllerBase
         return StatusCode(StatusCodes.Status201Created);
     }
 
-    [HttpPost]
-    [Route("RouteN")]
-    public IActionResult Post(int playerId)
+
+    private IActionResult Skip(int playerId)
     {
         if (!CommonState.SharedState.GameIsGoing)
             return BadRequest("The current game is not started or finished!");
