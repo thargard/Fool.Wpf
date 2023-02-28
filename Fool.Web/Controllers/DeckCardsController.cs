@@ -4,7 +4,7 @@ namespace Fool.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class TakeCardController : ControllerBase
+public class CardDrawsController : ControllerBase
 {
     [HttpPost]
     public bool GetOneCard(int playerId)

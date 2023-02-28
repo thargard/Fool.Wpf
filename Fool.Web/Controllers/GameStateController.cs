@@ -55,5 +55,14 @@ namespace Fool.Web.Controllers
         {
             CommonState.SharedState.TopCardSuit = suit;
         }
+
+        
+        [HttpGet]
+        [Route("PlayerToMove")]
+        public int? Get()
+        {
+            if (CommonState.SharedState.Players.Count == 0) { return null; }
+            return CommonState.SharedState.CurrentMovePlayerId;
+        }
     }
 }

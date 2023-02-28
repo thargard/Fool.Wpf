@@ -29,8 +29,7 @@ namespace Fool.Wpf
         private async void DrawOneCard(object sender, RoutedEventArgs e)
         {
             await _httpClient.PostAsJsonAsync(
-                $"https://localhost:{Port}/TakeCard?playerId={GetCurrentPlayerId()}",
-                0 /*об этом пока не думать*/);
+                $"https://localhost:{Port}/CardDraws?playerId={GetCurrentPlayerId()}", 0);
         }
         private async void PassOneMove(object sender, RoutedEventArgs e)
         {
@@ -60,7 +59,7 @@ namespace Fool.Wpf
         private async void StartGame(object sender, RoutedEventArgs e)
         {
             await _httpClient.PostAsJsonAsync(
-                $"https://localhost:{Port}/GameState?playerId={GetCurrentPlayerId()}", 
+                $"https://localhost:{Port}/GameState?playerId={GetCurrentPlayerId()}",
                 0);
         }
 
@@ -69,8 +68,8 @@ namespace Fool.Wpf
             _handArea.Children.Clear();
 
             var currentPlayerId = await _httpClient
-                .GetFromJsonAsync<int>($"https://localhost:{Port}/Move?");
-            PlayerToMoveLabel.Content = 
+                .GetFromJsonAsync<int>($"https://localhost:{Port}/GameState/PlayerToMove?");
+            PlayerToMoveLabel.Content =
                 currentPlayerId == 1 ? "Boris ходит" : "Gleb ходит";
             CardOnTheTable.Text = gameState.CardOnTheTable.Name;
 
@@ -79,8 +78,8 @@ namespace Fool.Wpf
             {
                 var cardInHand = new Button
                 {
-                    Content = card.Name, 
-                    Height = 40, 
+                    Content = card.Name,
+                    Height = 40,
                     Width = 70
                 };
                 cardInHand.Click += MakeMove;
@@ -88,7 +87,7 @@ namespace Fool.Wpf
             }
             _timerLable.Content = ((int)gameState.TimeToMove.TotalSeconds).ToString();
         }
-        
+
         private static void ShowError()
         {
             var erw = new ErrorWindow();

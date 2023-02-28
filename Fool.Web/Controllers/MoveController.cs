@@ -109,10 +109,4 @@ public class MoveController : ControllerBase
 
 
 
-    [HttpGet]
-    public int? Get()
-    {
-        if (CommonState.SharedState.Players.Count == 0) { return null; }
-        return CommonState.SharedState.CurrentMovePlayerId;
-    }
 }
