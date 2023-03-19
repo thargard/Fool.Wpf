@@ -9,7 +9,7 @@ namespace Fool.Web
 
         public void FillDeck()
         {
-            string[] suits = { "пик", "червей", "бубей", "треф" };
+            string[] suits = { "Пики", "Черви", "Буби", "Трефы" };
 
             var values = Enum.GetValues<CardValue>();
             foreach (var suit in suits)

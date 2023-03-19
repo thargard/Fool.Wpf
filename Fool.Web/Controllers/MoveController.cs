@@ -33,8 +33,15 @@ public class MoveController : ControllerBase
         }
         Card ncard = new Card(newCardValue, arr[1]);
 
-        if (ncard.Suit != CommonState.SharedState.CardOnTheTable.Suit && ncard.Value != CommonState.SharedState.CardOnTheTable.Value)
-            return StatusCode(StatusCodes.Status406NotAcceptable);
+        if (ncard.Value == CardValue.Queen)
+        {
+            Console.WriteLine("Это дама!"); // просто так
+        }
+        else
+        {
+            if (ncard.Suit != CommonState.SharedState.TopCardSuit && ncard.Value != CommonState.SharedState.CardOnTheTable.Value)
+                return StatusCode(StatusCodes.Status406NotAcceptable);
+        }
 
         CommonState.SharedState.CardOnTheTable = ncard;
 
@@ -48,8 +55,15 @@ public class MoveController : ControllerBase
         player1.Hand.Clear();
         player1.Hand.AddRange(nlist);
 
-        //player1.Hand.Remove(ncard);
         CommonState.SharedState.LastTurnTime = DateTime.Now;
+        CommonState.SharedState.TopCardSuit = ncard.Suit; // Присваивать масть верхней карты при завершении хода 
+
+        if (player1.Hand.Count() == 0)
+        {
+            CommonState.SharedState.GameIsGoing = false;
+            return StatusCode(StatusCodes.Status410Gone); // Игра завершена
+        }
+
         if (ncard.Value == CardValue.Eight)
             return StatusCode(StatusCodes.Status403Forbidden);
         if (ncard.Value == CardValue.Seven)
@@ -63,9 +77,15 @@ public class MoveController : ControllerBase
             player2.Hand.Add(CommonState.SharedState.GetOneCard());
             return StatusCode(StatusCodes.Status403Forbidden);
         }
+        if (ncard.Value == CardValue.Ace)
+            return StatusCode(StatusCodes.Status403Forbidden);
 
         if (player1.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
         else CommonState.SharedState.CurrentMovePlayerId = 1;
+
+        if (ncard.Value == CardValue.Queen)
+            return StatusCode(StatusCodes.Status300MultipleChoices);
+
         return StatusCode(StatusCodes.Status201Created);
     }
 
@@ -106,7 +126,4 @@ public class MoveController : ControllerBase
         }
         return StatusCode(StatusCodes.Status201Created);
     }
-
-
-
 }

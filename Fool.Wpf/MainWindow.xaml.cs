@@ -53,8 +53,19 @@ namespace Fool.Wpf
                 $"https://localhost:{Port}/Move?playerId={GetCurrentPlayerId()}&command={card}",
                 0);
 
+            var currentPlayerId = await _httpClient
+                .GetFromJsonAsync<int>($"https://localhost:{Port}/GameState/PlayerToMove?");
+            var winner = currentPlayerId == 1 ? "Boris победил!" : "Gleb победил!";
+
+            if (response.StatusCode == System.Net.HttpStatusCode.MultipleChoices)
+                ShowSuitChoice();
+
             if (response.StatusCode == System.Net.HttpStatusCode.NotAcceptable)
                 ShowError();
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Gone)
+                Console.WriteLine($"Игра завершена! {winner}");
+
         }
         private async void StartGame(object sender, RoutedEventArgs e)
         {
@@ -69,8 +80,7 @@ namespace Fool.Wpf
 
             var currentPlayerId = await _httpClient
                 .GetFromJsonAsync<int>($"https://localhost:{Port}/GameState/PlayerToMove?");
-            PlayerToMoveLabel.Content =
-                currentPlayerId == 1 ? "Boris ходит" : "Gleb ходит";
+            PlayerToMoveLabel.Content = currentPlayerId == 1 ? "Boris ходит" : "Gleb ходит";
             CardOnTheTable.Text = gameState.CardOnTheTable.Name;
 
             _currentSuitLabel.Content = "Масть: " + gameState.TopCardSuit;
@@ -92,6 +102,12 @@ namespace Fool.Wpf
         {
             var erw = new ErrorWindow();
             erw.ShowDialog();
+        }
+
+        private static void ShowSuitChoice()
+        {
+            var choiceWindow = new SuitChoose();
+            choiceWindow.ShowDialog();
         }
         private async Task GetPlayerState()
         {
