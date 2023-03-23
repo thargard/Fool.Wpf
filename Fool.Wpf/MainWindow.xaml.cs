@@ -64,8 +64,7 @@ namespace Fool.Wpf
                 ShowError();
 
             if (response.StatusCode == System.Net.HttpStatusCode.Gone)
-                Console.WriteLine($"Игра завершена! {winner}");
-
+                ShowVictory();
         }
         private async void StartGame(object sender, RoutedEventArgs e)
         {
@@ -98,6 +97,12 @@ namespace Fool.Wpf
             _timerLable.Content = ((int)gameState.TimeToMove.TotalSeconds).ToString();
         }
 
+        private static void ShowVictory()
+        {
+            var vw = new VictoryWindow();
+            vw.ShowDialog();
+        }
+
         private static void ShowError()
         {
             var erw = new ErrorWindow();
@@ -109,6 +114,7 @@ namespace Fool.Wpf
             var choiceWindow = new SuitChoose();
             choiceWindow.ShowDialog();
         }
+
         private async Task GetPlayerState()
         {
             var gs = await _httpClient.GetFromJsonAsync<PlayerGameState>(
