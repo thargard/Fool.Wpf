@@ -53,9 +53,9 @@ namespace Fool.Wpf
                 $"https://localhost:{Port}/Move?playerId={GetCurrentPlayerId()}&command={card}",
                 0);
 
-            var currentPlayerId = await _httpClient
-                .GetFromJsonAsync<int>($"https://localhost:{Port}/GameState/PlayerToMove?");
-            var winner = currentPlayerId == 1 ? "Boris победил!" : "Gleb победил!";
+            /*var currentPlayerId = */
+            await _httpClient.GetFromJsonAsync<int>($"https://localhost:{Port}/GameState/PlayerToMove?");
+            //var winner = currentPlayerId == 1 ? "Boris победил!" : "Gleb победил!";
 
             if (response.StatusCode == System.Net.HttpStatusCode.MultipleChoices)
                 ShowSuitChoice();
@@ -64,7 +64,10 @@ namespace Fool.Wpf
                 ShowError();
 
             if (response.StatusCode == System.Net.HttpStatusCode.Gone)
+            {
                 ShowVictory();
+                DialogResult = false;
+            }
         }
         private async void StartGame(object sender, RoutedEventArgs e)
         {

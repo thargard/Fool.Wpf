@@ -4,12 +4,18 @@
     {
         Six = 6, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace
     }
+
+    public enum CardSuit
+    {
+        Spades, Diamonds, Hearts, Clubs
+    }
+
     public sealed class Card
     {
         public CardValue Value { get; }
-        public string Suit { get; }
+        public CardSuit Suit { get; }
 
-        public Card(CardValue value, string suit)
+        public Card(CardValue value, CardSuit suit)
         {
             if (value < CardValue.Six || value > CardValue.Ace)
                 throw new ArgumentOutOfRangeException(nameof(value), "Should be >= 6 and <= 14");
