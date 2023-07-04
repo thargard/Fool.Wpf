@@ -27,7 +27,7 @@ public class SharedGameState
 
     public int CurrentMovePlayerId { get; set; }
 
-    public string TopCardSuit { get; set; }
+    public CardSuit TopCardSuit { get; set; }
 
     public Card GetOneCard()
     {

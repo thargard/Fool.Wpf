@@ -9,10 +9,10 @@ namespace Fool.Web
 
         public void FillDeck()
         {
-            string[] suits = { "Пики", "Черви", "Буби", "Трефы" };
+            // string[] suits = { "Пики", "Черви", "Буби", "Трефы" };
 
             var values = Enum.GetValues<CardValue>();
-            foreach (var suit in suits)
+            foreach (var suit in Enum.GetValues<CardSuit>())
             {
                 foreach (var value in values)
                 {

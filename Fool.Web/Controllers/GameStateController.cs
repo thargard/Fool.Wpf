@@ -54,7 +54,7 @@ namespace Fool.Web.Controllers
         [Route("CurrentSuit")]
         public void ChangeSuit(string suit)
         {
-            CommonState.SharedState.TopCardSuit = suit;
+            CommonState.SharedState.TopCardSuit = Enum.Parse<CardSuit>(suit);
         }
 
         

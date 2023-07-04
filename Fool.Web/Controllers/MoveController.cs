@@ -31,7 +31,9 @@ public class MoveController : ControllerBase
             case "Туз": newCardValue = CardValue.Ace; break;
             default: break;
         }
-        Card ncard = new Card(newCardValue, arr[1]);
+
+        var suit = Enum.Parse<CardSuit>(arr[1]);
+        Card ncard = new Card(newCardValue, suit);
 
         if (ncard.Value == CardValue.Queen)
         {
@@ -102,7 +104,7 @@ public class MoveController : ControllerBase
 
         int coincidence = 0;
 
-        string suit = CommonState.SharedState.CardOnTheTable.Suit;
+        var suit = CommonState.SharedState.CardOnTheTable.Suit;
         var value = CommonState.SharedState.CardOnTheTable.Value;
 
         if (player.Hand.Any(c => c.Value == CardValue.Queen))

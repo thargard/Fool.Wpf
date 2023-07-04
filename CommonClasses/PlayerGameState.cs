@@ -6,6 +6,6 @@
         public List<Card> Hand { get; set; } = null!;
         public TimeSpan TimeToMove { get; set; }
         public bool IsMineTurn { get; set; }
-        public string TopCardSuit { get; set; }
+        public CardSuit TopCardSuit { get; set; }
     }
 }
