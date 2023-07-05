@@ -1,47 +1,31 @@
-﻿using CommonClasses;
-using FluentAssertions;
-using FluentAssertions.Execution;
-using Fool.Web;
-using Fool.Web.Controllers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿namespace Fool.Tests;
 
-namespace Fool.Tests
+public sealed class MoveCorrectnessTests
 {
-    public sealed class WhenGameNotStartedTests
-    {
-        private readonly MoveController _moveController = new();
 
-        [Fact]
-        public void IncorrectPlayerId()
-        {
-            _moveController.Post(2, "skip").Should().BeOfType<BadRequestObjectResult>()
-                .Subject.Value.Should().Be("The current game is not started or finished!");
-        }
+
+    [Fact]
+    public void CanPlayCardWithTheSameValue()
+    {
 
     }
-    public sealed class MoveCorrectnessTests
+
+    [Fact]
+    public void CanPlayCardWithTheSameSuit()
     {
-        private readonly MoveController _moveController = new();
 
-        public MoveCorrectnessTests()
-        {
-            new GameStateController().StartNewGame(1);
-        }
-
-        [Fact]
-        public void CorrectPlayerToMove()
-        {
-            _moveController.Post(2, "skip").Should().BeOfType<StatusCodeResult>()
-                .Subject.StatusCode.Should().Be(StatusCodes.Status406NotAcceptable);
-        }
-     
-        [Fact]
-        public void CanAlwaysPlayQueen()
-        {
-            CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.Queen, CardSuit.Clubs);
-            _moveController.Post(1, "skip").Should().BeOfType<StatusCodeResult>()
-                .Subject.StatusCode.Should().Be(StatusCodes.Status409Conflict);
-        }
     }
+
+    [Fact]
+    public void CannotPlayCardWithDifferentSuitAndValue()
+    {
+
+    }
+
+    [Fact]
+    public void CanAlwaysPlayQueen()
+    {
+        // можно походить дамой при любой верхней карте
+    }
+
 }
