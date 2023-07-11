@@ -60,7 +60,7 @@ public class MoveController : ControllerBase
         CommonState.SharedState.LastTurnTime = DateTime.Now;
         CommonState.SharedState.TopCardSuit = ncard.Suit; // Присваивать масть верхней карты при завершении хода 
 
-        if (player1.Hand.Count() == 0)
+        if (player1.Hand.Count() == 0 && CommonState.SharedState.CardOnTheTable.Value != CardValue.Eight)
         {
             CommonState.SharedState.GameIsGoing = false;
             return StatusCode(StatusCodes.Status410Gone); // Игра завершена
@@ -68,6 +68,7 @@ public class MoveController : ControllerBase
 
         if (ncard.Value == CardValue.Eight)
             return StatusCode(StatusCodes.Status401Unauthorized);
+
         if (ncard.Value == CardValue.Seven)
         {
             player2.Hand.Add(CommonState.SharedState.GetOneCard());
@@ -102,12 +103,17 @@ public class MoveController : ControllerBase
 
         var player = CommonState.SharedState.Players.Single(p => p.Id == playerId);
 
-        int coincidence = 0;
+        if (CommonState.SharedState.CardOnTheTable.Value == CardValue.Eight) {
+            return StatusCode(StatusCodes.Status201Created);
+        }
 
-        var suit = CommonState.SharedState.CardOnTheTable.Suit;
+
+        /*var suit = CommonState.SharedState.CardOnTheTable.Suit;
         var value = CommonState.SharedState.CardOnTheTable.Value;
+        
+          int coincidence = 0;
 
-        /*  if (player.Hand.Any(c => c.Value == CardValue.Queen))
+          if (player.Hand.Any(c => c.Value == CardValue.Queen))
           {
               return StatusCode(StatusCodes.Status409Conflict);
           }
