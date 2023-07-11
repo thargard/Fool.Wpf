@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace Fool.Wpf
@@ -83,16 +85,29 @@ namespace Fool.Wpf
             var currentPlayerId = await _httpClient
                 .GetFromJsonAsync<int>($"https://localhost:{Port}/GameState/PlayerToMove?");
             PlayerToMoveLabel.Content = currentPlayerId == 1 ? "Boris ходит" : "Gleb ходит";
-            CardOnTheTable.Text = gameState.CardOnTheTable.Name;
+
+            var topCardBrush = new ImageBrush();
+            topCardBrush.ImageSource = new BitmapImage(new Uri(gameState.CardOnTheTable.ImageUri));
+            CardOnTheTable.Background = topCardBrush;
+
+            //CardOnTheTable.Text = gameState.CardOnTheTable.Name;
 
             _currentSuitLabel.Content = "Масть: " + gameState.TopCardSuit;
+
+
             foreach (var card in gameState.Hand)
             {
+                var imageBrush = new ImageBrush();
+
+                imageBrush.ImageSource = new BitmapImage(new Uri(card.ImageUri));
+                
                 var cardInHand = new Button
                 {
                     Content = card.Name,
-                    Height = 40,
-                    Width = 70
+                    FontSize = 1,
+                    Height = 70,
+                    Width = 50,
+                    Background = imageBrush
                 };
                 cardInHand.Click += MakeMove;
                 _handArea.Children.Add(cardInHand);

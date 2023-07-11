@@ -41,7 +41,10 @@ namespace Fool.Tests
         [Fact]
         public void HasNoRightToSkipIfPlayed8()
         {
-
+            CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.Eight, CardSuit.Diamonds);
+            _moveController.Post(1, CommonState.SharedState.Players[0].Hand[0].Name);
+            _moveController.Post(1, "skip").Should().BeOfType<StatusCodeResult>()
+               .Subject.StatusCode.Should().Be(StatusCodes.Status409Conflict);
         }
     }
 }

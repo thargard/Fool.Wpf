@@ -9,10 +9,10 @@
     <Grid x:Name="_dialogGrid">
         <DockPanel>
             <TextBlock DockPanel.Dock="Top" TextAlignment="Center">Выбирите масть:</TextBlock>
-            <Button Content="Пики" Margin="5" DockPanel.Dock="Left"  Height="30" Width="70" Click="MakeSuit"/>
-            <Button Content="Буби" Margin="5" DockPanel.Dock="Left"  Height="30" Width="70" Click="MakeSuit"/>
-            <Button Content="Черви" Margin="5" DockPanel.Dock="Left" Height="30"  Width="70" Click="MakeSuit"/>
-            <Button Content="Трефы" Margin="5"  DockPanel.Dock="Left"  Height="30"  Width="70" Click="MakeSuit"/>
+            <Button Content="Spades" Margin="5" DockPanel.Dock="Left"  Height="30" Width="70" Click="MakeSuit"/>
+            <Button Content="Diamonds" Margin="5" DockPanel.Dock="Left"  Height="30" Width="70" Click="MakeSuit"/>
+            <Button Content="Hearts" Margin="5" DockPanel.Dock="Left" Height="30"  Width="70" Click="MakeSuit"/>
+            <Button Content="Clubs" Margin="5"  DockPanel.Dock="Left"  Height="30"  Width="70" Click="MakeSuit"/>
         </DockPanel>
     </Grid>
 </Window>

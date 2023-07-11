@@ -37,12 +37,12 @@
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" 
                       HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Disabled">
             <StackPanel Name="_handArea" Orientation="Horizontal">
-
+                
             </StackPanel>
         </ScrollViewer>
         <TextBlock x:Name="CardOnTheTable"
-                   Width="80"
-                   Height="100"
+                   Width="50"
+                   Height="70"
                    Background="White"></TextBlock>
     </Grid>
 </Window>

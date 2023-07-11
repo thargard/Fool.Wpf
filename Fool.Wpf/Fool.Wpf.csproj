@@ -8,7 +8,157 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\10 Clubs.png" />
+    <None Remove="resources\10 Diamonds.png" />
+    <None Remove="resources\10 Hearts.png" />
+    <None Remove="resources\10 Spades.png" />
+    <None Remove="resources\6 Clubs.png" />
+    <None Remove="resources\6 Diamonds.png" />
+    <None Remove="resources\6 Hearts.png" />
+    <None Remove="resources\6 Spades.png" />
+    <None Remove="resources\7 Clubs.png" />
+    <None Remove="resources\7 Diamonds.png" />
+    <None Remove="resources\7 Hearts.png" />
+    <None Remove="resources\7 Spades.png" />
+    <None Remove="resources\8 Clubs.png" />
+    <None Remove="resources\8 Diamonds.png" />
+    <None Remove="resources\8 Hearts.png" />
+    <None Remove="resources\8 Spades.png" />
+    <None Remove="resources\9 Clubs.png" />
+    <None Remove="resources\9 Diamonds.png" />
+    <None Remove="resources\9 Hearts.png" />
+    <None Remove="resources\9 Spades.png" />
+    <None Remove="resources\Валет Clubs.png" />
+    <None Remove="resources\Валет Diamonds.png" />
+    <None Remove="resources\Валет Hearts.png" />
+    <None Remove="resources\Валет Spades.png" />
+    <None Remove="resources\Дама Clubs.png" />
+    <None Remove="resources\Дама Diamonds.png" />
+    <None Remove="resources\Дама Hearts.png" />
+    <None Remove="resources\Дама Spades.png" />
+    <None Remove="resources\Король Clubs.png" />
+    <None Remove="resources\Король Diamonds.png" />
+    <None Remove="resources\Король Hearts.png" />
+    <None Remove="resources\Король Spades.png" />
+    <None Remove="resources\Туз Clubs.png" />
+    <None Remove="resources\Туз Diamonds.png" />
+    <None Remove="resources\Туз Hearts.png" />
+    <None Remove="resources\Туз Spades.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CommonClasses\CommonClasses.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resources\10 Clubs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\10 Diamonds.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\10 Hearts.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\10 Spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\6 Clubs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\6 Diamonds.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\6 Hearts.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\6 Spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\7 Clubs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\7 Diamonds.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\7 Hearts.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\7 Spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\8 Clubs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\8 Diamonds.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\8 Hearts.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\8 Spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\9 Clubs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\9 Diamonds.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\9 Hearts.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\9 Spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Валет Clubs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Валет Diamonds.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Валет Hearts.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Валет Spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Дама Clubs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Дама Diamonds.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Дама Hearts.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Дама Spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Король Clubs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Король Diamonds.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Король Hearts.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Король Spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Туз Clubs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Туз Diamonds.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Туз Hearts.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Туз Spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

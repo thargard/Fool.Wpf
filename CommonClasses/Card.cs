@@ -33,5 +33,8 @@
                 CardValue.Ace => $"Туз {Suit}",
                 _ => throw new ArgumentOutOfRangeException()
             };
+
+        public string ImageUri => $@"pack://application:,,,/resources/{Name}.png";
+           
     }
 }
