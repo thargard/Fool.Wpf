@@ -67,7 +67,7 @@ public class MoveController : ControllerBase
         }
 
         if (ncard.Value == CardValue.Eight)
-            return StatusCode(StatusCodes.Status403Forbidden);
+            return StatusCode(StatusCodes.Status401Unauthorized);
         if (ncard.Value == CardValue.Seven)
         {
             player2.Hand.Add(CommonState.SharedState.GetOneCard());
@@ -107,25 +107,29 @@ public class MoveController : ControllerBase
         var suit = CommonState.SharedState.CardOnTheTable.Suit;
         var value = CommonState.SharedState.CardOnTheTable.Value;
 
-        if (player.Hand.Any(c => c.Value == CardValue.Queen))
-        {
-            return StatusCode(StatusCodes.Status409Conflict);
-        }
-        else
-        {
-            foreach (var crd in player.Hand)
-            {
-                if (crd.Value == value || crd.Suit == suit)
-                    coincidence++;
-            }
+        /*  if (player.Hand.Any(c => c.Value == CardValue.Queen))
+          {
+              return StatusCode(StatusCodes.Status409Conflict);
+          }
+          else
+          {
+              foreach (var crd in player.Hand)
+              {
+                  if (crd.Value == value || crd.Suit == suit)
+                      coincidence++;
+              }
 
-            if (coincidence == 0)
-            {
-                if (player.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
-                else CommonState.SharedState.CurrentMovePlayerId = 1;
-            }
-            if (coincidence >= 1) { return StatusCode(StatusCodes.Status409Conflict); }
-        }
+              if (coincidence == 0)
+              {
+                  if (player.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
+                  else CommonState.SharedState.CurrentMovePlayerId = 1;
+              }
+              if (coincidence >= 1) { return StatusCode(StatusCodes.Status409Conflict); }
+          }*/
+
+        if (player.Id == 1) CommonState.SharedState.CurrentMovePlayerId = 2;
+        else CommonState.SharedState.CurrentMovePlayerId = 1;
+
         return StatusCode(StatusCodes.Status201Created);
     }
 }

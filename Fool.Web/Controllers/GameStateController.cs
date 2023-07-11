@@ -7,6 +7,8 @@ namespace Fool.Web.Controllers
     [Route("[controller]")]
     public class GameStateController : ControllerBase
     {
+        private readonly MoveController _moveController = new();
+
         [HttpGet]
         public PlayerGameState? Get(int playerId)
         {
@@ -46,8 +48,10 @@ namespace Fool.Web.Controllers
 
             CommonState.SharedState.CurrentMovePlayerId = playerId;
             CommonState.SharedState.CardOnTheTable = CommonState.SharedState.GetOneCard();
+            _moveController.Post(playerId, CommonState.SharedState.CardOnTheTable.Name);
             CommonState.SharedState.TopCardSuit = CommonState.SharedState.CardOnTheTable.Suit;
             CommonState.SharedState.GameIsGoing = true;
+
         }
 
         [HttpPost]

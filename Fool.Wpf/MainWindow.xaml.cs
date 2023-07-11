@@ -32,6 +32,7 @@ namespace Fool.Wpf
         {
             await _httpClient.PostAsJsonAsync(
                 $"https://localhost:{Port}/CardDraws?playerId={GetCurrentPlayerId()}", 0);
+            PassOneMove(sender, e);
         }
         private async void PassOneMove(object sender, RoutedEventArgs e)
         {
@@ -43,6 +44,7 @@ namespace Fool.Wpf
                 case System.Net.HttpStatusCode.NotAcceptable:
                 case System.Net.HttpStatusCode.Conflict:
                 case System.Net.HttpStatusCode.BadRequest:
+                case System.Net.HttpStatusCode.Unauthorized:
                     ShowError();
                     break;
             }
