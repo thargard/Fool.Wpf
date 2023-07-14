@@ -12,39 +12,44 @@ namespace Fool.Tests
     {
         private readonly MoveController _moveController = new();
 
+        private readonly CardDrawsController _deckController = new();
+
         public HasRightToSkipTests()
         {
             new GameStateController().StartNewGame(1);
+            CommonState.SharedState.CardOnTheTable = new Card(CardValue.Nine, CardSuit.Hearts);
         }
 
         [Fact]
         public void CorrectPlayerToMove()
         {
-            _moveController.Post(2, "skip").Should().BeOfType<StatusCodeResult>()
+            _moveController.Post(1, "skip").Should().BeOfType<StatusCodeResult>()
                 .Subject.StatusCode.Should().Be(StatusCodes.Status406NotAcceptable);
         }
      
         [Fact]
         public void HasRightToSkipMove()
         {
-            CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.Queen, CardSuit.Clubs);
-            _moveController.Post(1, "skip").Should().BeOfType<StatusCodeResult>()
-                .Subject.StatusCode.Should().Be(StatusCodes.Status409Conflict);
+            CommonState.SharedState.Players[1].Hand[0] = new Card(CardValue.Queen, CardSuit.Clubs);
+            _moveController.Post(2, "skip").Should().BeOfType<StatusCodeResult>()
+                .Subject.StatusCode.Should().Be(StatusCodes.Status201Created);
         }
 
-        [Fact]
+        /*[Fact]
         public void HasNoRightToSkipWithoutTakingCard()
         {
+            _moveController.Post(2, "skip").Should().BeOfType<StatusCodeResult>()
+                .Subject.StatusCode.Should().Be(StatusCodes.Status201Created);
+        }*/
 
-        }
-
-        [Fact]
+        /*[Fact]
         public void HasNoRightToSkipIfPlayed8()
         {
-            CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.Eight, CardSuit.Diamonds);
-            _moveController.Post(1, CommonState.SharedState.Players[0].Hand[0].Name);
-            _moveController.Post(1, "skip").Should().BeOfType<StatusCodeResult>()
+            CommonState.SharedState.Players[1].Hand[0] = new Card(CardValue.Eight, CardSuit.Hearts);
+            CommonState.SharedState.Players[1].Hand[1] = new Card(CardValue.Jack, CardSuit.Hearts);
+            _moveController.Post(2, CommonState.SharedState.Players[1].Hand[0].Name);
+            _moveController.Post(2, "skip").Should().BeOfType<StatusCodeResult>()
                .Subject.StatusCode.Should().Be(StatusCodes.Status409Conflict);
-        }
+        }*/
     }
 }

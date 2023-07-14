@@ -107,7 +107,6 @@ public class MoveController : ControllerBase
             return StatusCode(StatusCodes.Status201Created);
         }
 
-
         /*var suit = CommonState.SharedState.CardOnTheTable.Suit;
         var value = CommonState.SharedState.CardOnTheTable.Value;
         

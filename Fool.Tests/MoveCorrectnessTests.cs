@@ -20,21 +20,15 @@ public sealed class MoveCorrectnessTests
     [Fact]
     public void CanPlayCardWithTheSameValue()
     {
-        CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.King, CardSuit.Clubs);
-        CommonState.SharedState.Players[1].Hand[0] = new Card(CardValue.King, CardSuit.Diamonds);
-        _moveController.Post(1, CommonState.SharedState.Players[0].Hand[0].Name);
+        CommonState.SharedState.Players[1].Hand[0] = new Card(CardValue.Nine, CardSuit.Diamonds);
         _moveController.Post(2, CommonState.SharedState.Players[1].Hand[0].Name).Should().BeOfType<StatusCodeResult>()
-            .Subject.StatusCode.Should().Be(StatusCodes.Status406NotAcceptable);
-        // должно быть равно 201Created потом исправить
+            .Subject.StatusCode.Should().Be(StatusCodes.Status201Created);
     }
 
     [Fact]
     public void CanPlayCardWithTheSameSuit()
     {
-        CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.Jack, CardSuit.Clubs);
-        CommonState.SharedState.Players[1].Hand[0] = new Card(CardValue.King, CardSuit.Clubs);
-        _moveController.Post(1, CommonState.SharedState.Players[0].Hand[0].Name);
-        CommonState.SharedState.CurrentMovePlayerId = 2;
+        CommonState.SharedState.Players[1].Hand[0] = new Card(CardValue.Jack, CardSuit.Clubs);
         _moveController.Post(2, CommonState.SharedState.Players[1].Hand[0].Name).Should().BeOfType<StatusCodeResult>()
             .Subject.StatusCode.Should().Be(StatusCodes.Status201Created);
     }
@@ -42,10 +36,7 @@ public sealed class MoveCorrectnessTests
     [Fact]
     public void CannotPlayCardWithDifferentSuitAndValue()
     {
-        CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.Jack, CardSuit.Clubs);
         CommonState.SharedState.Players[1].Hand[0] = new Card(CardValue.King, CardSuit.Diamonds);
-        _moveController.Post(1, CommonState.SharedState.Players[0].Hand[0].Name);
-        CommonState.SharedState.CurrentMovePlayerId = 2;
         _moveController.Post(2, CommonState.SharedState.Players[1].Hand[0].Name).Should().BeOfType<StatusCodeResult>()
             .Subject.StatusCode.Should().Be(StatusCodes.Status406NotAcceptable);
     }
@@ -53,11 +44,7 @@ public sealed class MoveCorrectnessTests
     [Fact]
     public void CanAlwaysPlayQueen()
     {
-        // можно походить дамой при любой верхней карте
-        CommonState.SharedState.Players[0].Hand[0] = new Card(CardValue.Jack, CardSuit.Clubs);
         CommonState.SharedState.Players[1].Hand[0] = new Card(CardValue.Queen, CardSuit.Spades);
-        _moveController.Post(1, CommonState.SharedState.Players[0].Hand[0].Name);
-        CommonState.SharedState.CurrentMovePlayerId = 2;
         _moveController.Post(2, CommonState.SharedState.Players[1].Hand[0].Name).Should().BeOfType<StatusCodeResult>()
             .Subject.StatusCode.Should().Be(StatusCodes.Status300MultipleChoices);
     }
